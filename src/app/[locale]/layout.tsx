@@ -4,6 +4,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 import "../globals.css";
 
 // 生成静态参数（用于 SSG）
@@ -44,7 +45,8 @@ export default async function LocaleLayout({
     <html lang={locale} className="dark">
       <body className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
         <NextIntlClientProvider messages={messages}>
-          <div className="fixed top-4 right-4 z-50">
+          <div className="fixed top-4 right-4 z-50 flex items-center gap-4">
+            <ThemeSwitcher />
             <LanguageSwitcher />
           </div>
           {children}
