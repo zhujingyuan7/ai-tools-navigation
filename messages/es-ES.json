@@ -1,0 +1,44 @@
+{
+  "metadata": {
+    "title": "Navegación de Herramientas AI - Descubre las Mejores Herramientas AI",
+    "description": "Explora y descubre las mejores herramientas de inteligencia artificial, incluyendo generación de texto, procesamiento de imagen, producción de video y más"
+  },
+  "home": {
+    "title": "Navegación de Herramientas AI",
+    "subtitle": "Explora y descubre las mejores herramientas AI para potenciar tu creatividad y trabajo"
+  },
+  "search": {
+    "placeholder": "Buscar herramientas AI..."
+  },
+  "categories": {
+    "all": "Todas",
+    "textGeneration": "Generación de Texto",
+    "imageProcessing": "Procesamiento de Imagen",
+    "videoProduction": "Producción de Video",
+    "codeDevelopment": "Desarrollo de Código",
+    "audioProcessing": "Procesamiento de Audio",
+    "dataAnalysis": "Análisis de Datos",
+    "officeAssistant": "Asistente de Oficina"
+  },
+  "featured": {
+    "title": "Destacados",
+    "badge": "Destacado"
+  },
+  "tools": {
+    "allTools": "Todas las Herramientas",
+    "noResults": "No se encontraron herramientas coincidentes",
+    "tryOther": "Prueba otras palabras clave o categorías"
+  },
+  "footer": {
+    "copyright": "© 2024 Navegación de Herramientas AI. Descubre las infinitas posibilidades de la IA."
+  },
+  "languageSwitcher": {
+    "label": "Idioma",
+    "zh-CN": "中文",
+    "en-US": "English",
+    "ja-JP": "日本語",
+    "ko-KR": "한국어",
+    "es-ES": "Español",
+    "fr-FR": "Français"
+  }
+}

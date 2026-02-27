@@ -1,0 +1,44 @@
+{
+  "metadata": {
+    "title": "AIツールナビゲーション - 最高のAIツールを発見",
+    "description": "テキスト生成、画像処理、動画制作など、最高の人工知能ツールを探索・発見"
+  },
+  "home": {
+    "title": "AIツールナビゲーション",
+    "subtitle": "最高のAIツールを探索・発見し、創造と仕事を支援"
+  },
+  "search": {
+    "placeholder": "AIツールを検索..."
+  },
+  "categories": {
+    "all": "すべて",
+    "textGeneration": "テキスト生成",
+    "imageProcessing": "画像処理",
+    "videoProduction": "動画制作",
+    "codeDevelopment": "コード開発",
+    "audioProcessing": "音声処理",
+    "dataAnalysis": "データ分析",
+    "officeAssistant": "オフィスアシスタント"
+  },
+  "featured": {
+    "title": "おすすめ",
+    "badge": "おすすめ"
+  },
+  "tools": {
+    "allTools": "すべてのツール",
+    "noResults": "一致するツールが見つかりません",
+    "tryOther": "他のキーワードやカテゴリを試してください"
+  },
+  "footer": {
+    "copyright": "© 2024 AIツールナビゲーション. AIの無限の可能性を発見."
+  },
+  "languageSwitcher": {
+    "label": "言語",
+    "zh-CN": "中文",
+    "en-US": "English",
+    "ja-JP": "日本語",
+    "ko-KR": "한국어",
+    "es-ES": "Español",
+    "fr-FR": "Français"
+  }
+}

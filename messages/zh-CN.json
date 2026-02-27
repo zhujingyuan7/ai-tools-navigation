@@ -1,0 +1,44 @@
+{
+  "metadata": {
+    "title": "AI工具导航站 - 发现最好的AI工具",
+    "description": "探索和发现最好的人工智能工具，包括文本生成、图像处理、视频制作等多个领域"
+  },
+  "home": {
+    "title": "AI工具导航站",
+    "subtitle": "探索和发现最好的人工智能工具，助力你的创作与工作"
+  },
+  "search": {
+    "placeholder": "搜索AI工具..."
+  },
+  "categories": {
+    "all": "全部",
+    "textGeneration": "文本生成",
+    "imageProcessing": "图像处理",
+    "videoProduction": "视频制作",
+    "codeDevelopment": "代码开发",
+    "audioProcessing": "音频处理",
+    "dataAnalysis": "数据分析",
+    "officeAssistant": "办公助手"
+  },
+  "featured": {
+    "title": "精选推荐",
+    "badge": "精选"
+  },
+  "tools": {
+    "allTools": "全部工具",
+    "noResults": "没有找到匹配的工具",
+    "tryOther": "试试其他关键词或分类"
+  },
+  "footer": {
+    "copyright": "© 2024 AI工具导航站. 发现AI的无限可能."
+  },
+  "languageSwitcher": {
+    "label": "语言",
+    "zh-CN": "中文",
+    "en-US": "English",
+    "ja-JP": "日本語",
+    "ko-KR": "한국어",
+    "es-ES": "Español",
+    "fr-FR": "Français"
+  }
+}

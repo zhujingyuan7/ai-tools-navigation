@@ -1,0 +1,44 @@
+{
+  "metadata": {
+    "title": "AI Tools Navigation - Discover the Best AI Tools",
+    "description": "Explore and discover the best artificial intelligence tools, including text generation, image processing, video production and more"
+  },
+  "home": {
+    "title": "AI Tools Navigation",
+    "subtitle": "Explore and discover the best AI tools to empower your creativity and work"
+  },
+  "search": {
+    "placeholder": "Search AI tools..."
+  },
+  "categories": {
+    "all": "All",
+    "textGeneration": "Text Generation",
+    "imageProcessing": "Image Processing",
+    "videoProduction": "Video Production",
+    "codeDevelopment": "Code Development",
+    "audioProcessing": "Audio Processing",
+    "dataAnalysis": "Data Analysis",
+    "officeAssistant": "Office Assistant"
+  },
+  "featured": {
+    "title": "Featured",
+    "badge": "Featured"
+  },
+  "tools": {
+    "allTools": "All Tools",
+    "noResults": "No matching tools found",
+    "tryOther": "Try other keywords or categories"
+  },
+  "footer": {
+    "copyright": "© 2024 AI Tools Navigation. Discover the infinite possibilities of AI."
+  },
+  "languageSwitcher": {
+    "label": "Language",
+    "zh-CN": "中文",
+    "en-US": "English",
+    "ja-JP": "日本語",
+    "ko-KR": "한국어",
+    "es-ES": "Español",
+    "fr-FR": "Français"
+  }
+}

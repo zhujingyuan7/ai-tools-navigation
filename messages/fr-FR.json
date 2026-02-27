@@ -1,0 +1,44 @@
+{
+  "metadata": {
+    "title": "Navigation d'Outils IA - Découvrez les Meilleurs Outils IA",
+    "description": "Explorez et découvrez les meilleurs outils d'intelligence artificielle, y compris la génération de texte, le traitement d'image, la production vidéo et plus"
+  },
+  "home": {
+    "title": "Navigation d'Outils IA",
+    "subtitle": "Explorez et découvrez les meilleurs outils IA pour soutenir votre créativité et votre travail"
+  },
+  "search": {
+    "placeholder": "Rechercher des outils IA..."
+  },
+  "categories": {
+    "all": "Tous",
+    "textGeneration": "Génération de Texte",
+    "imageProcessing": "Traitement d'Image",
+    "videoProduction": "Production Vidéo",
+    "codeDevelopment": "Développement de Code",
+    "audioProcessing": "Traitement Audio",
+    "dataAnalysis": "Analyse de Données",
+    "officeAssistant": "Assistant Bureau"
+  },
+  "featured": {
+    "title": "En Vedette",
+    "badge": "En Vedette"
+  },
+  "tools": {
+    "allTools": "Tous les Outils",
+    "noResults": "Aucun outil correspondant trouvé",
+    "tryOther": "Essayez d'autres mots-clés ou catégories"
+  },
+  "footer": {
+    "copyright": "© 2024 Navigation d'Outils IA. Découvrez les possibilités infinies de l'IA."
+  },
+  "languageSwitcher": {
+    "label": "Langue",
+    "zh-CN": "中文",
+    "en-US": "English",
+    "ja-JP": "日本語",
+    "ko-KR": "한국어",
+    "es-ES": "Español",
+    "fr-FR": "Français"
+  }
+}
