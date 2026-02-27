@@ -1,0 +1,10 @@
+[
+  {
+    "id": "admin-1",
+    "username": "admin",
+    "passwordHash": "$2a$10$N9qo8uLOickgx2ZMRZoMy.MrqJ3iLkGJ8q8Z4tXe.5gG.7qF8eK4W",
+    "email": "admin@wafflebrain.com",
+    "createdAt": "2024-01-01T00:00:00Z",
+    "lastLogin": null
+  }
+]

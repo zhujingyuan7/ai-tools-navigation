@@ -1,0 +1,16 @@
+{
+  "siteName": "Waffle Brain",
+  "siteTitle": "AI 工具导航站",
+  "logo": "",
+  "favicon": "",
+  "description": "发现最好的 AI 工具，提升你的工作效率",
+  "keywords": ["AI工具", "人工智能", "ChatGPT", "AI绘画", "AI写作"],
+  "defaultSeoDescription": "Waffle Brain - 最好的 AI 工具导航站，发现和使用最新的人工智能工具",
+  "defaultSeoKeywords": ["AI工具", "人工智能", "AI导航", "ChatGPT", "Midjourney", "AI助手"],
+  "contactEmail": "",
+  "socialLinks": {
+    "twitter": "",
+    "github": "",
+    "discord": ""
+  }
+}
