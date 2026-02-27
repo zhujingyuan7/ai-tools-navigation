@@ -40,5 +40,27 @@
     "ko-KR": "한국어",
     "es-ES": "Español",
     "fr-FR": "Français"
+  },
+  "toolDetail": {
+    "back_to_home": "返回首页",
+    "featured": "精选",
+    "visit_website": "访问官网",
+    "learn_more": "了解更多",
+    "description": "描述",
+    "quick_tips": "快速提示",
+    "keyboard_shortcuts": "快捷键",
+    "shortcut_back": "返回",
+    "shortcut_favorite": "收藏/取消收藏",
+    "shortcut_refresh": "刷新",
+    "tip_1": "尝试相关工具，发现更多可能性",
+    "tip_2": "查看工具评价和用户反馈",
+    "tip_3": "收藏此工具方便下次访问",
+    "tool_not_found": "未找到该工具"
+  },
+  "newCategories": {
+    "news": "AI热点",
+    "tips": "OpenClaw技巧",
+    "tutorials": "AI教程",
+    "community": "AI社区"
   }
 }
