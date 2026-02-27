@@ -62,5 +62,11 @@
     "tips": "OpenClaw技巧",
     "tutorials": "AI教程",
     "community": "AI社区"
+  },
+  "favorites": {
+    "title": "我的收藏",
+    "no_favorites": "还没有收藏任何工具",
+    "no_favorites_desc": "浏览工具页面，点击心形图标将你喜欢的工具添加到收藏列表",
+    "explore_tools": "浏览全部工具"
   }
 }

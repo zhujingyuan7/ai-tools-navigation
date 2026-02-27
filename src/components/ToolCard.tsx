@@ -1,18 +1,39 @@
 'use client';
 
 import { AITool } from '@/types';
+import { useFavorites } from '@/hooks/useFavorites';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface ToolCardProps {
   tool: AITool;
 }
 
 export default function ToolCard({ tool }: ToolCardProps) {
+  const { toggleFavorite, isFavorite } = useFavorites();
+  const { trackEvent } = useAnalytics();
+
+  const handleFavoriteClick = () => {
+    toggleFavorite(tool.id);
+    trackEvent('tool_card_favorite_click', {
+      tool_id: tool.id,
+      tool_name: tool.name,
+    });
+  };
+
+  const handleWebsiteClick = () => {
+    trackEvent('tool_card_website_click', {
+      tool_id: tool.id,
+      tool_name: tool.name,
+    });
+  };
+
   return (
     <a
       href={tool.website}
       target="_blank"
       rel="noopener noreferrer"
       className="block group"
+      onClick={handleWebsiteClick}
     >
       <div className="glass-effect rounded-xl p-6 card-hover relative overflow-hidden">
         {tool.featured && (
@@ -53,12 +74,25 @@ export default function ToolCard({ tool }: ToolCardProps) {
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l2.8 2.034c-.784.57-.38-1.81.588 1.81h3.461a1 1 0 00.951-.69l1.07 3.292z" />
               </svg>
               <span className="text-sm text-slate-300">{tool.rating}</span>
             </div>
           </div>
         </div>
+        
+        {/* Favorite Button */}
+        <button
+          onClick={handleFavoriteClick}
+          className={`absolute top-4 right-4 p-2 rounded-full transition-all ${
+            isFavorite(tool.id)
+              ? 'bg-red-500 hover:bg-red-600 text-red-100'
+              : 'bg-slate-700 hover:bg-slate-600 text-gray-300'
+          }`}
+          title={isFavorite(tool.id) ? '取消收藏' : '收藏'}
+        >
+          {isFavorite(tool.id) ? '❤️' : '🤍'}
+        </button>
         
         <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       </div>
