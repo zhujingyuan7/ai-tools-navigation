@@ -11,7 +11,7 @@ import { aiTools } from '@/data/tools';
 export default function Home() {
   const t = useTranslations();
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(t('categories.all'));
+  const [selectedFilter, setSelectedFilter] = useState('all');
 
   const filteredTools = useMemo(() => {
     return aiTools.filter((tool) => {
@@ -20,12 +20,19 @@ export default function Home() {
         tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tool.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      const matchesCategory =
-        selectedCategory === t('categories.all') || tool.category === selectedCategory;
+      // 解析筛选器（格式：category 或 category_priceType）
+      const [filterType, filterValue] = selectedFilter.split('_');
+      
+      const matchesCategory = filterType === 'all' || filterValue === 'all' || tool.category === filterValue;
+      const matchesPrice = filterType !== 'price' || (filterValue === 'all' || 
+        (filterValue === 'free' && tool.priceType === 'free') ||
+        (filterValue === 'freemium' && tool.priceType === 'freemium') ||
+        (filterValue === 'paid' && tool.priceType === 'paid')
+      );
 
-      return matchesSearch && matchesCategory;
+      return matchesSearch && matchesCategory && matchesPrice;
     });
-  }, [searchQuery, selectedCategory, t]);
+  }, [searchQuery, selectedFilter, t]);
 
   const featuredTools = useMemo(() => {
     return aiTools.filter((tool) => tool.featured);
@@ -52,12 +59,12 @@ export default function Home() {
 
           <div className="mb-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
             <CategoryFilter
-              selectedCategory={selectedCategory}
-              onCategoryChange={setSelectedCategory}
+              selectedFilter={selectedFilter}
+              onFilterChange={setSelectedFilter}
             />
           </div>
 
-          {searchQuery === '' && selectedCategory === t('categories.all') && (
+          {searchQuery === '' && selectedFilter === 'all' && (
             <div className="mb-12 animate-slide-up" style={{ animationDelay: '0.2s' }}>
               <h2 className="text-2xl font-semibold text-slate-100 mb-6 flex items-center gap-2">
                 <span className="text-2xl">⭐</span>
@@ -74,9 +81,9 @@ export default function Home() {
           <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
             <h2 className="text-2xl font-semibold text-slate-100 mb-6 flex items-center gap-2">
               <span className="text-2xl">🔧</span>
-              {selectedCategory === t('categories.all')
+              {selectedFilter === 'all'
                 ? t('tools.allTools')
-                : selectedCategory}
+                : selectedFilter}
               <span className="text-slate-500 text-lg font-normal">
                 ({filteredTools.length})
               </span>
