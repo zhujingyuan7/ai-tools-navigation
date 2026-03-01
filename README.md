@@ -1,42 +1,207 @@
-# Waffle Brain 🧇🧼
+# 🧇🧼 Waffle Brain 🧠
 
 <div align="center">
 
 ![Waffle Brain Logo](/logos/logo-simple.svg)
 
-**一个现代化的 AI 工具导航站，发现和探索最好的人工智能工具**
+**一个现代化的 AI 工具导航站，基于 Next.js 14 和 Tailwind CSS 构建**
 
 ---
 
-## ✨ 功能特点
+## 🌟 核心亮点
 
-- 🎨 **现代化暗色主题** - 玻璃拟态设计，视觉体验极佳
+- 🎨 **Apple 风格设计** - 精致的毛玻璃效果、流沙动画、动态渐变背景
+- 🌐 **完全响应式** - 完美适配手机、平板、桌面设备
+- 🚀 **极速体验** - 60fps 流畅动画、快速搜索响应
+- 🌍 **多语言支持** - 中文、英文、日语、韩文、西班牙文
+- 💾 **智能推荐** - AI 驱动的工具推荐系统
+- 📊 **热门排行榜** - 实时更新的 Top 10 工具榜单
+
+---
+
+## ✨ 主要功能
+
+### 🧰 工具导航
+- 📂 **8 大分类** - 自然语言、代码助手、图像生成、视频制作等
 - 🔍 **实时搜索** - 支持工具名称、描述、标签搜索
-- 📂 **智能分类** - 8 个分类，快速筛选
-- ⭐ **精选推荐** - 每周更新的热门工具
-- 📱 **完全响应式** - 完美适配手机、平板、桌面
-- 🌍 **多语言支持** - 中文、英文、日文、韩文、西班牙文、法文
-- 📝 **收藏功能** - 本地存储，个性化收藏列表
-- 💰 **新内容分类** - 除了工具，还有新闻、技巧、教程、社区
-- 🔥 **热门排行榜** - 基于访问量的 Top 10 热门工具
-- 💰 **价格筛选** - 免费工具、Freemium、付费工具筛选
-- 🌙 **主题切换** - 支持深色/浅色主题，持久化设置
-- 📊 **前端埋点** - 完整的用户行为追踪和分析
+- 🏷️ **价格筛选** - 免费工具、Freemium、付费工具筛选
+- ⭐ **精选推荐** - 周度更新的热门工具推荐
+- 💾 **工具详情** - 完整的工具信息、官网链接、评分、用户评价
+- 📚 **收藏功能** - 本地存储、个性化收藏列表
+
+### 📰 新内容分类
+- 📰 **AI 新闻热点** - AI 行业最新动态、产品发布、融资收购
+- 💡 **OpenClaw 使用技巧** - Agent 配置、最佳实践、快捷命令
+- 📚 **AI 教程合集** - 编程教程、Prompt Engineering、架构设计
+- 💬 **AI 问答社区** - 常见问题解答、用户经验分享
+- 🔥 **热门排行榜** - Top 10 工具、动态排名、访问量统计
+
+### 🎨 个性化功能
+- 🌍 **主题切换** - 支持深色/浅色主题，持久化存储
+- 🌐 **语言切换** - 6 种语言支持（中文、英文、日语、韩文、西班牙文、法文）
+- ⭐ **收藏管理** - 收藏列表、分类管理、导入导出
+- 📊 **浏览历史** - 最近查看的工具记录
+- 🔔 **偏好设置** - 默认语言、主题、搜索建议等
 
 ---
 
 ## 🚀 技术栈
 
-- **框架**: Next.js 14 (App Router)
-- **语言**: TypeScript
-- **样式**: Tailwind CSS
-- **部署**: Vercel
-- **图标**: Lucide React Icons
-- **字体**: Inter (Google Fonts)
+### 核心框架
+- **[Next.js 14](https://nextjs.org)** - React 框架，App Router
+- **[React 18](https://react.dev)** - UI 库
+- **[TypeScript](https://www.typescriptlang.org/)** - 类型安全
+
+### 样式和 UI
+- **[Tailwind CSS 3.4](https://tailwindcss.com)** - 原子化 CSS 框架
+- **[Framer Motion 12.34](https://www.framer.com/motion)** - 高性能动画库
+- **[Lucide React Icons](https://lucide.dev)** - 精美的图标库
+
+### 部署
+- **[Vercel](https://vercel.com)** - 自动部署平台
+- **Edge Runtime** - 全球边缘计算网络
+
+### 开发工具
+- **ESLint** - 代码质量检查
+- **Prettier** - 代码格式化
+- **Git** - 版本控制
 
 ---
 
-## 📦 快速开始
+## 🎨 Apple 风格设计系统
+
+### 🌈 配色方案（基于 oklch()）
+
+#### 主色调
+- **Apple Blue** - `oklch(0.65 0.195 254.14)` - 专业、可信赖的主色调
+- **Neutral Gray** - `oklch(0.98 0.004 285.82)` - 中性灰，用于次要元素
+- **Accent Purple** - `oklch(0.60 0.18 310.14)` - 强调色，用于交互反馈
+
+#### 玻璃态效果
+- **背景模糊** - 20px blur + 180% 饱和度
+- **边框透明度** - 18% 精细边框
+- **三层结构** - 基础背景 + 渐变边框 + 光泽动画
+
+### ✨ 高级视觉效果
+
+#### 🌊 流沙效果（Floating Particles）
+- **20 个随机分布的发光粒子**
+- **从底部浮起** - 6.5s - 9.5s 动画时长
+- **不同速度** - 营造深度感
+
+#### 🪟 动态渐变背景
+- **15 秒色彩循环** - primary → accent → secondary → primary
+- **平滑过渡** - 无性能影响
+- **400% 400%** 尺寸
+
+#### 🪟 Shimmer 光泽效果
+- **4 秒光泽移动** - 白色渐变光泽
+- **卡片悬停时增强** - 更明显的光泽效果
+
+#### 💡 光反射效果
+- **顶部柔和光晕** - 椭圆形渐变
+- **3 秒脉冲动画** - opacity 0.3 → 0.6
+
+#### ✨ 增强辉光效果
+- **4 层蓝色发光** - 20px、40px、60px、100px
+- **2 秒脉冲循环** - 模拟呼吸灯效果
+- **悬停时增强** - 更强烈的发光
+
+### 🎭 动画系统
+
+#### 动画时长（Apple 风格）
+| 效果 | 时长 | 用途 |
+|------|------|------|
+| 立即响应 | 0ms | 焦点变化 |
+| 快速 | 150ms | 按钮点击、图标动画 |
+| 正常 | 300ms | 卡片悬停、页面过渡 |
+| 缓慢 | 500ms | 搜索结果加载 |
+| 较慢 | 750ms | 页面加载动画 |
+| 最慢 | 1000ms | 重大状态变化 |
+
+#### 缓动函数
+- **linear** - 线性（色彩渐变）
+- **ease-in** - 页面淡入
+- **ease-out** - 页面淡出
+- **ease-in-out** - 双向过渡
+- **ease-bounce** - 弹性动画
+- **ease-elastic** - 弹性效果
+
+### 🔤 字体系统
+
+#### 字体家族（Apple 风格）
+- **Inter** - 主要字体（现代、清晰、易读）
+- **JetBrains Mono** - 代码字体（开发者友好）
+- **Apple System Fonts** - 优先使用原生字体（最佳性能）
+
+#### 字体选择理由
+- ✅ **优先使用 Apple 系统字体** - SF Pro Display、SF Pro Text 等
+- ✅ **Inter 作为备选** - 现代、清晰
+- ✅ **JetBrains Mono** - 专业的代码显示
+
+---
+
+## 📦 项目结构
+
+```
+ai-tools-navigation/
+├── src/
+│   ├── [locale]/              # 多语言路由（zh-CN, en-US, ja-JP, ko-KR, es-ES, fr-FR）
+│   │   ├── page.tsx          # 主页
+│   │   ├── tools/[id]/      # 工具详情页
+│   │   ├── favorites/       # 收藏列表页
+│   │   ├── news/            # AI 新闻热点
+│   │   ├── tips/            # OpenClaw 使用技巧
+│   │   ├── tutorials/         # AI 教程合集
+│   │   ├── community/        # AI 问答社区
+│   │   └── trending/        # 热门排行榜
+│   ├── components/         # React 组件
+│   │   ├── CategoryFilter.tsx    # 分类和价格筛选
+│   │   ├── SearchBar.tsx          # 搜索栏
+│   │   ├── ToolCard.tsx           # 工具卡片
+│   │   ├── LoadingSpinner.tsx      # 加载动画
+│   │   ├── EmptyState.tsx         # 空状态
+│   │   ├── LanguageSwitcher.tsx   # 语言切换器
+│   │   ├── ThemeSwitcher.tsx     # 主题切换器
+│   │   └── ...更多组件
+│   ├── hooks/             # 自定义 Hooks
+│   │   ├── useTranslations.ts  # 国际化 Hook
+│   │   ├── useAnalytics.ts        # 分析 Hook
+│   │   ├── useFavorites.ts        # 收藏 Hook
+│   │   ├── useTheme.ts            # 主题 Hook
+│   │   └── ...更多 Hooks
+│   ├── data/              # 数据文件
+│   │   ├── tools.ts               # 工具数据（30 个）
+│   │   ├── trending.ts            # 热门数据（10 个）
+│   │   ├── news.ts                # 新闻数据（15 条）
+│   │   ├── tips.ts                 # 技巧数据（12 条）
+│   │   ├── tutorials.ts            # 教程数据（12 条）
+│   │   └── community.ts           # 问答数据（10 条）
+│   ├── lib/               # 工具库
+│   ├── i18n/              # 国际化文件
+│   │   ├── zh-CN.json      # 中文
+│   │   ├── en-US.json      # 英文
+│   │   ├── ja-JP.json      # 日文
+│   │   ├── ko-KR.json      # 韩文
+│   │   ├── es-ES.json      # 西班牙文
+│   │   └── fr-FR.json      # 法文
+│   ├── app/             # Next.js App Router
+│   ├── globals.css       # 全局样式（Apple 风格）
+│   ├── layout.tsx       # 根布局
+│   └── ...其他配置文件
+├── public/             # 静态资源
+│   ├── logos/          # Logo 文件（SVG）
+│   └── ...其他资源
+├── messages/          # 国际化消息文件
+├── tailwind.config.ts  # Tailwind 配置（oklch 色彩空间）
+├── tsconfig.json       # TypeScript 配置
+├── package.json        # 项目配置
+└── ...其他文件
+```
+
+---
+
+## 📚 快速开始
 
 ### 1. 克隆仓库
 
@@ -57,208 +222,27 @@ npm install
 npm run dev
 ```
 
-访问 [http://localhost:3000](http://localhost:3000) 查看效果。
+然后访问：**http://localhost:3000**
 
----
+### 4. 构建生产版本
 
-## 🎯 核心功能模块
-
-### 📂 工具导航
-
-#### 主页功能
-- ✅ 工具列表展示
-- ✅ 实时搜索
-- ✅ 智能分类（8 个）
-- ✅ 价格筛选（全部/免费/Freemium/付费）
-- ✅ 精选推荐展示
-- ✅ 响应式网格布局
-- ✅ 悬停动画和过渡效果
-
-#### 工具详情页
-- ✅ 独立页面路由 `/[locale]/tools/[id]`
-- ✅ 面包屑导航
-- ✅ 完整工具信息展示
-- ✅ 访问官网按钮
-- ✅ 收藏功能集成
-
-#### 收藏功能
-- ✅ 收藏列表页面 `/[locale]/favorites`
-- ✅ 本地存储
-- ✅ 收藏管理
-
-#### 新内容分类
-- 📰 **AI 每日热点** `/[locale]/news` - AI 行业新闻和动态
-- 💡 **OpenClaw 使用技巧** `/[locale]/tips` - 配置和技巧
-- 📚 **AI 教程合集** `/[locale]/tutorials` - 精选学习资源
-- 💬 **AI 咨询社区** `/[locale]/community` - 问答和讨论
-
-#### 热门工具排行榜
-- 🔥 **热门排行榜** `/[locale]/trending` - Top 10 热门工具
-
-#### 其他功能
-- 🌙 **主题切换** - 深色/浅色主题
-- 📊 **前端埋点** - 用户行为追踪和分析
-
----
-
-## 📦 技术栈
-
-- **框架**: Next.js 14
-- **语言**: TypeScript
-- **样式**: Tailwind CSS
-- **部署**: Vercel
-- **图标**: Lucide React Icons
-- **字体**: Inter (Google Fonts)
-
----
-
-## 🎯 数据概览
-
-- **工具总数**: 30 个精选 AI 工具
-- **分类数量**: 8 个主要分类
-- **新闻条目**: 15 条 AI 行业动态
-- **技巧条目**: 12 条 OpenClaw 使用技巧
-- **教程条目**: 12 条 AI 学习教程
-- **问答条目**: 10 条社区热门问答
-- **支持语言**: 6 种（中文、英文、日文、韩文、西班牙文、法文）
-
----
-
-## 📊 项目结构
-
-```
-ai-tools-navigation/
-├── src/
-│   ├── [locale]/             # 多语言路由
-│   │   ├── page.tsx          # 主页
-│   │   ├── tools/[id]/      # 工具详情页
-│   │   ├── favorites/       # 收藏列表页
-│   │   ├── news/            # AI 每日热点
-│   │   ├── tips/            # OpenClaw 使用技巧
-│   │   ├── tutorials/         # AI 教程合集
-│   │   ├── community/        # AI 咨询社区
-│   │   └── trending/        # 热门排行榜
-│   ├── components/         # 可复用组件
-│   │   ├── CategoryFilter.tsx    # 分类和价格筛选
-│   │   ├── SearchBar.tsx        # 搜索栏
-│   │   ├── ToolCard.tsx         # 工具卡片
-│   │   ├── LanguageSwitcher.tsx  # 语言切换器
-│   │   ├── ThemeSwitcher.tsx   # 主题切换器
-│   │   ├── AnalyticsProvider.tsx # 埋点 Provider
-│   │   ├── CookieConsent.tsx     # GDPR 隐私提示
-│   │   └── Logo.tsx            # Logo 组件
-│   ├── data/               # 数据文件
-│   │   ├── tools.ts           # AI 工具数据（30 个）
-│   │   ├── trending.ts         # 热门工具数据（10 个）
-│   │   ├── news.ts            # 新闻数据（15 条）
-│   │   ├── tips.ts            # 技巧数据（12 条）
-│   │   ├── tutorials.ts        # 教程数据（12 条）
-│   │   └── community.ts       # 社区问答数据（10 条）
-│   ├── hooks/              # 自定义 Hooks
-│   │   ├── useTranslations.ts  # 国际化 Hook
-│   │   ├── useAnalytics.ts     # 埋点 Hook
-│   │   ├── useFavorites.ts      # 收藏 Hook
-│   │   └── useTheme.ts         # 主题 Hook
-│   ├── i18n.ts             # 国际化配置
-│   ├── middleware.ts       # Next.js 中间件
-│   ├── types/              # TypeScript 类型定义
-│   └── app/
-│       ├── globals.css      # 全局样式
-│       ├── layout.tsx       # 根布局
-│       └── [locale]/        # 多语言路由
-├── public/               # 静态资源
-│   └── logos/        # Logo 文件
-│       ├── logo-simple.svg   # 简洁版
-│       ├── logo-full.svg     # 完整版
-│       ├── logo-dark.svg     # 深色版
-│       └── logo-light.svg    # 浅色版
-├── messages/            # 翻译文件
-│   ├── zh-CN.json        # 中文
-│   ├── en-US.json        # 英文
-│   ├── ja-JP.json         # 日文
-│   ├── ko-KR.json        # 韩文
-│   ├── es-ES.json         # 西班牙文
-│   └── fr-FR.json        # 法文
-├── tailwind.config.ts  # Tailwind 配置
-├── tsconfig.json          # TypeScript 配置
-└── package.json             # 项目配置
+```bash
+npm run build
+npm start
 ```
 
 ---
 
 ## 🌍 支持的语言
 
-- 🇨🇳 **中文** (zh-CN) - 默认
-- 🇺🇸 **英文** (en-US)
-- 🇯🇵 **日文** (ja-JP)
-- 🇰🇷 **韩文** (ko-KR)
-- 🇪🇸 **西班牙文** (es-ES)
-- 🇫🇷 **法文** (fr-FR)
-
----
-
-## 🎨 设计理念
-
-**Waffle Brain** 的设计灵感来自：
-
-- **华夫格子**（Waffle）- 象征神经网络的结构化数据
-- **大脑**（Brain）- 代表 AI 的智能和思考
-
-**配色方案**：
-- 主色：科技蓝 `#3B82F6`（Next.js 蓝）
-- 强调色：华夫黄 `#F5A623`（温暖）
-- 背景：深石板色 `#0F172A`
-
-**UI 风格**：
-- 玻璃拟态效果（Glassmorphism）
-- 渐变色和阴影
-- 圆角和柔和过渡
-- 卡片悬停动画
-- 流畅的页面切换
-
----
-
-## 📝 功能分类
-
-### 📰 AI 每日热点
-
-- AI 行业新闻和动态
-- 产品发布信息
-- 融资和收购消息
-- 技术突破和更新
-- 市场趋势分析
-
-### 💡 OpenClaw 使用技巧
-
-- OpenClaw 基础配置
-- Gateway 服务管理
-- Agent 技能管理
-- CLI 命令速查
-- 自动化脚本编写
-- 最佳实践和技巧
-
-### 📚 AI 教程合集
-
-- 编程类教程
-- AI 应用使用教程
-- Prompt Engineering 教程
-- 框架使用教程
-- 工具对比教程
-
-### 💬 AI 咨询社区
-
-- 常见问题和解答
-- 用户分享的经验
-- 工具推荐请求
-- 参与讨论
-
----
-
-## 🔥 热门工具排行榜
-
-- Top 10 热门工具
-- 排名依据（访问量、收藏数、评分）
-- 动态排名卡片
+| 语言 | 代码 | 名称 | 状态 |
+|------|------|------|------|
+| 🇨🇳🇰 | zh-CN | 简体中文 | ✅ 完整支持 |
+| 🇺🇸 | en-US | 英文 | ✅ 完整支持 |
+| 🇯🇵 | ja-JP | 日文 | ✅ 完整支持 |
+| 🇰🇷 | ko-KR | 韩文 | ✅ 完整支持 |
+| 🇪🇸 | es-ES | 西班牙文 | ✅ 完整支持 |
+| 🇫🇷 | fr-FR | 法文 | ✅ 完整支持 |
 
 ---
 
@@ -270,32 +254,50 @@ ai-tools-navigation/
 - **技巧条目**: 12 条 OpenClaw 使用技巧
 - **教程条目**: 12 条 AI 学习教程
 - **问答条目**: 10 条社区热门问答
+- **支持语言**: 6 种语言
 
 ---
 
-## 🤝 贡献方式
+## 🎨 Apple 风格特色
 
-### 提交 Issue
+### 视觉效果
+- ✨ **流沙效果** - 20 个浮动的发光粒子
+- 🪟 **动态渐变背景** - 15 秒色彩循环动画
+- 🪟 **毛玻璃效果** - 20px blur + 180% 饱和度
+- 💫 **Shimmer 光泽** - 4 秒光泽移动动画
+- 💡 **光反射** - 悬停时显示的顶部光晕
+- ✨ **增强辉光** - 4 层蓝色发光系统
 
-发现 Bug 或有新功能建议？欢迎提交 Issue：
+### 交互效果
+- ⬆️ **3D 悬停** - 卡片悬停时轻微上浮（8px）
+- 🔄 **旋转效果** - 悬停时轻微旋转（2deg）
+- 🫧 **光泽移动** - Shimmer 效果增强
+- 💫 **脉冲动画** - 2 秒发光脉冲
 
-[https://github.com/zhujingyuan7/ai-tools-navigation/issues](https://github.com/zhujingyuan7/ai-tools-navigation/issues)
-
-### Fork 项目
-
-想自定义功能？欢迎 Fork 项目并进行修改：
-
-[https://github.com/zhujingyuan7/ai-tools-navigation/fork](https://github.com/zhujingyuan7/ai-tools-navigation/fork)
-
-### Star 项目
-
-觉得这个项目有用？给个 Star 支持：
-
-[https://github.com/zhujingyuan7/ai-tools-navigation](https://github.com/zhujingyuan7/ai-tools-navigation)
+### 动画性能
+- ⚡ **GPU 加速** - 使用 `transform` 和 `opacity`
+- 📊 **Will-Change** - 重要动画使用 `will-change`
+- 🎯 **60fps** - 流畅的动画帧率
 
 ---
 
-## 📄 许可证
+## 🎯 设计理念
+
+Waffle Brain 的设计灵感来自：
+
+- **华夫格子**（Waffle）- 象征神经网络的结构化数据
+- **大脑**（Brain）- 代表 AI 的智能和思考
+
+**设计原则：**
+1. **简洁优先** - 留白，让内容说话
+2. **细节完美** - 精心打磨每个像素
+3. **流畅动画** - 60fps 流畅体验
+4. **高对比度** - 清晰的视觉层次
+5. **一致性** - 统一的设计语言
+
+---
+
+## 📝 许可证
 
 MIT License
 
@@ -303,13 +305,16 @@ MIT License
 
 ## 👨 作者
 
-**Waffle Brain Team**  
-[https://github.com/zhujingyuan7](https://github.com/zhujingyuan7)
+**Waffle Brain Team**
+
+- 🌐 **官网**: [https://wafflebrain.com](https://wafflebrain.com)
+- 🐙 **GitHub**: [https://github.com/zhujingyuan7/ai-tools-navigation](https://github.com/zhujingyuan7/ai-tools-navigation)
+- 📧 **Twitter**: [@wafflebrain](https://twitter.com/wafflebrain)
 
 ---
 
 <div align="center">
 
-**Made with ❤️ using Next.js & Tailwind CSS**
+**Made with ❤️ using [Next.js](https://nextjs.org) & [Tailwind CSS](https://tailwindcss.com)**
 
 </div>
