@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useAnalytics } from './useAnalytics';
+﻿import { useState, useEffect } from 'react';
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState<string[]>(() => {
@@ -10,6 +9,7 @@ export function useFavorites() {
         return [];
       }
     }
+    return [];
   });
 
   const toggleFavorite = (toolId: string) => {
@@ -23,13 +23,9 @@ export function useFavorites() {
         updated = [...prev, toolId];
       }
       
-      localStorage.setItem('favorites', JSON.stringify(updated));
-      
-      const { trackEvent } = useAnalytics();
-      trackEvent(exists ? 'tool_unfavorite' : 'tool_favorite', {
-        tool_id: toolId,
-        favorites_count: updated.length,
-      });
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('favorites', JSON.stringify(updated));
+      }
       
       return updated;
     });
@@ -51,16 +47,11 @@ export function useFavorites() {
       }
     };
 
-    window.addEventListener('storage', handleStorageChange);
-    
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('storage', handleStorageChange);
+      return () => window.removeEventListener('storage', handleStorageChange);
+    }
   }, []);
 
-  return {
-    favorites,
-    toggleFavorite,
-    isFavorite,
-  };
+  return { favorites, toggleFavorite, isFavorite };
 }

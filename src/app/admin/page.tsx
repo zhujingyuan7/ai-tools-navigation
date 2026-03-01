@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import LoginModal from '@/components/admin/LoginModal';
@@ -34,11 +34,10 @@ export default function AdminPage() {
     <>
       {showLogin && (
         <LoginModal
-          onSuccess={handleLogin}
-          onClose={() => {}}
+          isOpen={showLogin}
+          onLogin={handleLogin}
         />
       )}
-
       {isAuthenticated && (
         <Dashboard onLogout={handleLogout} />
       )}

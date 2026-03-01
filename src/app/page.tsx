@@ -1,14 +1,19 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import SearchBar from '@/components/SearchBar';
 import CategoryFilter from '@/components/CategoryFilter';
 import ToolCard from '@/components/ToolCard';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import EmptyState from '@/components/EmptyState';
 import { aiTools } from '@/data/tools';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
-export default function Home() {
+function HomeContent() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('全部');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isLoading, setIsLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const filteredTools = useMemo(() => {
     return aiTools.filter((tool) => {
@@ -17,10 +22,16 @@ export default function Home() {
         tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tool.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      const matchesCategory =
-        selectedCategory === '全部' || tool.category === selectedCategory;
+      const [filterType, filterValue] = selectedCategory.split('_');
 
-      return matchesSearch && matchesCategory;
+      const matchesCategory = filterType === 'all' || filterValue === 'all' || tool.category === filterValue;
+      const matchesPrice = filterType !== 'price' || (filterValue === 'all' ||
+        (filterValue === 'free' && tool.priceType === 'free') ||
+        (filterValue === 'freemium' && tool.priceType === 'freemium') ||
+        (filterValue === 'paid' && tool.priceType === 'paid')
+      );
+
+      return matchesSearch && matchesCategory && matchesPrice;
     });
   }, [searchQuery, selectedCategory]);
 
@@ -28,77 +39,132 @@ export default function Home() {
     return aiTools.filter((tool) => tool.featured);
   }, []);
 
+  const handleSearch = (query: string) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setSearchQuery(query);
+    }, 500);
+  };
+
+  // Trigger mount animation
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <main className="min-h-screen">
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-500/10 via-transparent to-transparent" />
-        
-        <div className="relative container mx-auto px-4 py-12">
-          <div className="text-center mb-12 animate-fade-in">
-            <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-indigo-400 to-purple-400 mb-4">
-              AI工具导航站
-            </h1>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              探索和发现最好的人工智能工具，助力你的创作与工作
-            </p>
-          </div>
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Skip to main content link */}
+      <a href="#main-content" className="skip-to-content">
+        跳到主要内容
+      </a>
 
-          <div className="mb-8 animate-slide-up">
-            <SearchBar onSearch={setSearchQuery} />
-          </div>
-
-          <div className="mb-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            <CategoryFilter
-              selectedCategory={selectedCategory}
-              onCategoryChange={setSelectedCategory}
-            />
-          </div>
-
-          {searchQuery === '' && selectedCategory === '全部' && (
-            <div className="mb-12 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-              <h2 className="text-2xl font-semibold text-slate-100 mb-6 flex items-center gap-2">
-                <span className="text-2xl">⭐</span>
-                精选推荐
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {featuredTools.map((tool) => (
-                  <ToolCard key={tool.id} tool={tool} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
-            <h2 className="text-2xl font-semibold text-slate-100 mb-6 flex items-center gap-2">
-              <span className="text-2xl">🔧</span>
-              {selectedCategory === '全部' ? '全部工具' : selectedCategory}
-              <span className="text-slate-500 text-lg font-normal">
-                ({filteredTools.length})
-              </span>
-            </h2>
-
-            {filteredTools.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredTools.map((tool) => (
-                  <ToolCard key={tool.id} tool={tool} />
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-16">
-                <div className="text-6xl mb-4">🔍</div>
-                <p className="text-xl text-slate-400">没有找到匹配的工具</p>
-                <p className="text-sm text-slate-500 mt-2">试试其他关键词或分类</p>
-              </div>
-            )}
-          </div>
-        </div>
+      {/* Animated Particle Background */}
+      <div className="particle-effect">
+        {[...Array(20)].map((_, i) => (
+          <div key={i} className="particle" style={{ left: `${(i + 1) * 5}%` }} />
+        ))}
       </div>
 
-      <footer className="border-t border-slate-800/50 mt-20 py-8">
-        <div className="container mx-auto px-4 text-center text-slate-500 text-sm">
-          <p>© 2024 AI工具导航站. 发现AI的无限可能.</p>
+      {/* Light Reflection Effect */}
+      <div className="light-reflection" />
+
+      <main id="main-content" className="min-h-screen relative z-10" role="main">
+        <div className="relative container mx-auto px-4 py-12">
+          {/* Hero Section with Apple-style glass effect */}
+          <header className="apple-glass rounded-3xl p-12 mb-16 text-center">
+            <h1 className="text-5xl md:text-6xl font-bold text-gradient apple-glow mb-6 animate-fade-in" style={{ animationDelay: '0ms' }}>
+              AI 工具导航站
+            </h1>
+            <p className={`text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed ${mounted ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '100ms' }}>
+              发现最优质的 AI 工具和资源
+            </p>
+          </header>
+
+          {/* Search Bar with Apple-style glass effect */}
+          <nav aria-label="搜索工具" className="mb-10">
+            <div className={`apple-glass rounded-2xl ${mounted ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '200ms' }}>
+              <SearchBar onSearch={handleSearch} />
+            </div>
+          </nav>
+
+          {/* Category Filter with Apple-style glass effect */}
+          <nav aria-label="分类筛选" className="mb-10">
+            <div className={`apple-glass rounded-2xl ${mounted ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '300ms' }}>
+              <CategoryFilter
+                selectedCategory={selectedCategory}
+                onFilterChange={setSelectedCategory}
+              />
+            </div>
+          </nav>
+
+          {/* Content Section */}
+          <section aria-label="工具列表" className="min-h-[400px]">
+            {/* Featured Tools */}
+            {searchQuery === '' && selectedCategory === 'all' && (
+              <div className={`apple-glass-elevated rounded-3xl p-8 ${mounted ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '400ms' }}>
+                <h2 className="text-2xl font-semibold text-foreground mb-6 flex items-center gap-2">
+                  <span className="text-2xl">🔥</span>
+                  精选推荐
+                </h2>
+                <div className="grid-responsive">
+                  {featuredTools.map((tool) => (
+                    <ToolCard key={tool.id} tool={tool} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Tool Grid with staggered animations */}
+            <div aria-live="polite">
+              {isLoading ? (
+                <LoadingSpinner size="lg" message="正在搜索工具..." />
+              ) : filteredTools.length > 0 ? (
+                <div className={`${mounted ? 'animate-slide-in-up' : 'opacity-0'}`} style={{ animationDelay: '500ms' }}>
+                  <h2 className="text-2xl font-semibold text-foreground mb-6 flex items-center gap-2">
+                    <span className="text-2xl">📦</span>
+                    {selectedCategory === 'all' ? '全部工具' : selectedCategory}
+                    <span className="text-muted-foreground text-lg font-normal ml-2">
+                      ({filteredTools.length})
+                    </span>
+                  </h2>
+
+                  <div className="grid-responsive">
+                    {filteredTools.map((tool, index) => (
+                      <div key={tool.id} style={{ animationDelay: `${500 + index * 100}ms` }}>
+                        <ToolCard tool={tool} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className={`apple-glass rounded-3xl p-12 text-center ${mounted ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '600ms' }}>
+                  <div className="mb-4">
+                    <div className="w-20 h-20 mx-auto text-5xl">🔍</div>
+                  </div>
+                  <h2 className="text-2xl font-semibold text-foreground mb-4">未找到匹配的工具</h2>
+                  <p className="text-lg text-muted-foreground">尝试调整搜索词或筛选条件</p>
+                </div>
+              )}
+            </div>
+          </section>
+        </div>
+      </main>
+
+      {/* Modern Footer with Apple-style glass effect */}
+      <footer className="border-t border-subtle mt-20 py-8 apple-glass">
+        <div className="container mx-auto px-4 text-center text-muted-foreground text-sm">
+          <p>© 2024 AI 工具导航站. All rights reserved.</p>
         </div>
       </footer>
-    </main>
+    </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <ErrorBoundary fallback={<LoadingSpinner size="lg" message="加载中..." />}>
+      <HomeContent />
+    </ErrorBoundary>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Filter, ChevronDown } from 'lucide-react';
 import { categories } from '@/data/tools';
 
 interface CategoryFilterProps {
@@ -8,97 +9,110 @@ interface CategoryFilterProps {
   onFilterChange: (filter: string) => void;
 }
 
-export default function CategoryFilter({ selectedCategory, onCategoryChange }: CategoryFilterProps) {
+export default function CategoryFilter({ selectedCategory, onFilterChange }: CategoryFilterProps) {
   const [priceFilter, setPriceFilter] = useState<'all' | 'free' | 'freemium' | 'paid'>('all');
+  const [isOpen, setIsOpen] = useState(false);
 
   const handlePriceFilter = (priceType: 'all' | 'free' | 'freemium' | 'paid') => {
     setPriceFilter(priceType);
-    onCategoryChange(selectedCategory === 'all' && priceType === 'all' ? 'all' : `${selectedCategory}_${priceType}`);
+    onFilterChange(selectedCategory === 'all' && priceType === 'all' ? 'all' : `${selectedCategory}_${priceType}`);
   };
 
   return (
-    <div className="space-y-6">
-      {/* Categories */}
-      <div>
-        <h3 className="text-lg font-semibold text-slate-100 mb-4 flex items-center gap-2">
-          <span>📂</span> 分类
-        </h3>
-        <div className="flex flex-wrap gap-2 justify-center">
-          <button
-            key="all"
-            onClick={() => {
-              setPriceFilter('all');
-              onCategoryChange('all');
-            }}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-              selectedCategory === 'all' && priceFilter === 'all'
-                ? 'bg-gradient-to-r from-primary-500 to-indigo-500 text-white shadow-lg shadow-primary-500/25'
-                : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 border border-slate-700/50'
-            }`}
-          >
-            全部
-          </button>
-          {categories.map((category) => (
+    <div className="space-y-8">
+      {/* Category Filter with Apple-style glassmorphism */}
+      <div className="apple-glass rounded-3xl p-6">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-full flex items-center justify-between mb-5 text-left transition-all duration-[300ms]"
+          aria-expanded={isOpen}
+          aria-controls="category-filter"
+        >
+          <div className="flex items-center gap-2">
+            <Filter className="w-5 h-5 text-primary" />
+            <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
+              📁 分类筛选
+              <ChevronDown
+                className={`w-5 h-5 ml-2 transition-transform duration-[300ms] ${isOpen ? 'rotate-180' : ''}`}
+              />
+            </h3>
+          </div>
+        </button>
+
+        <div
+          id="category-filter"
+          className={`overflow-hidden transition-all duration-[300ms] ${isOpen ? 'max-h-96' : 'max-h-0'}`}
+        >
+          <div className="space-y-2 pt-2">
+            {/* All */}
             <button
-              key={category}
-              onClick={() => onCategoryChange(category)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                selectedCategory === category && priceFilter === 'all'
-                  ? 'bg-gradient-to-r from-primary-500 to-indigo-500 text-white shadow-lg shadow-primary-500/25'
-                  : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 border border-slate-700/50'
+              onClick={() => {
+                setPriceFilter('all');
+                onFilterChange('all');
+              }}
+              className={`w-full px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-[200ms] text-left hover:translate-x-1 ${
+                selectedCategory === 'all' && priceFilter === 'all'
+                  ? 'btn btn-primary'
+                  : 'btn btn-secondary'
               }`}
             >
-              {category}
+              🎯 全部
             </button>
-          ))}
+
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => onFilterChange(category)}
+                className={`w-full px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-[200ms] text-left hover:translate-x-1 ${
+                  selectedCategory === category && priceFilter === 'all'
+                    ? 'btn btn-primary'
+                    : 'btn btn-secondary'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Price Filter */}
-      <div>
-        <h3 className="text-lg font-semibold text-slate-100 mb-4 flex items-center gap-2">
-          <span>💰</span> 价格筛选
+      {/* Price Filter with Apple-style glassmorphism */}
+      <div className="apple-glass rounded-3xl p-6">
+        <h3 className="text-lg font-semibold text-foreground mb-5 flex items-center gap-2">
+          💰 价格筛选
         </h3>
-        <div className="flex flex-wrap gap-2 justify-center">
+        <div className="grid grid-cols-2 gap-2.5">
           <button
             onClick={() => handlePriceFilter('all')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-              priceFilter === 'all'
-                ? 'bg-gradient-to-r from-primary-500 to-indigo-500 text-white shadow-lg shadow-primary-500/25'
-                : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 border border-slate-700/50'
+            className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-[200ms] hover:translate-y-[-1px] hover:scale-[1.02] ${
+              priceFilter === 'all' ? 'btn btn-primary' : 'btn btn-secondary'
             }`}
           >
             全部
           </button>
           <button
             onClick={() => handlePriceFilter('free')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-              priceFilter === 'free'
-                ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/25'
-                : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 border border-slate-700/50'
+            className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-[200ms] hover:translate-y-[-1px] hover:scale-[1.02] ${
+              priceFilter === 'free' ? 'btn btn-primary' : 'btn btn-secondary'
             }`}
           >
-            免费
+            🆓 免费
           </button>
           <button
             onClick={() => handlePriceFilter('freemium')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-              priceFilter === 'freemium'
-                ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/25'
-                : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 border border-slate-700/50'
+            className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-[200ms] hover:translate-y-[-1px] hover:scale-[1.02] ${
+              priceFilter === 'freemium' ? 'btn btn-primary' : 'btn btn-secondary'
             }`}
           >
-            Freemium
+            🎁 Freemium
           </button>
           <button
             onClick={() => handlePriceFilter('paid')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-              priceFilter === 'paid'
-                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/25'
-                : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 border border-slate-700/50'
+            className={`px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-[200ms] hover:translate-y-[-1px] hover:scale-[1.02] ${
+              priceFilter === 'paid' ? 'btn btn-primary' : 'btn btn-secondary'
             }`}
           >
-            付费
+            💎 付费
           </button>
         </div>
       </div>

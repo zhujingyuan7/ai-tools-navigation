@@ -1,21 +1,19 @@
-import createMiddleware from 'next-intl/middleware';
-import { locales, defaultLocale } from './i18n';
+﻿import createMiddleware from 'next-intl/middleware';
+import { routing } from '@/i18n/routing';
 
-export default createMiddleware({
-  // 支持的语言列表
-  locales,
-
-  // 默认语言
-  defaultLocale,
-
-  // 语言前缀
-  localePrefix: 'as-needed',
-
-  // 语言检测顺序：cookie > header > 路径
-  localeDetection: true,
-});
+export default createMiddleware(routing);
 
 export const config = {
-  // 匹配除了 _next、api、static 等特殊路径之外的所有路径
-  matcher: ['/', '/(zh-CN|en-US|ja-JP|ko-KR|es-ES|fr-FR)/:path*'],
+  matcher: [
+    // Enable a redirect to a matching locale at the root
+    '/',
+
+    // Set a cookie to remember the previous locale for
+    // all requests that have a locale prefix
+    '/(zh-CN|en-US|es-ES|fr-FR|ja-JP|ko-KR)/:path*',
+
+    // Enable redirects that add missing locales
+    // (e.g. `/pathnames` -> `/en/pathnames`)
+    '/((?!_next|_vercel|.*\\..*).*)',
+  ],
 };
