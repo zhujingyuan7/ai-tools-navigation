@@ -32,12 +32,16 @@ export default function LoadingState({
         aria-label={message}
         aria-live="polite"
       >
-        <div className="flex items-center gap-3">
-          <Loader2 
-            className={`${sizeClasses[size]} animate-spin text-primary`}
-            aria-hidden="true"
-          />
-          <span className="text-muted-foreground">{message}</span>
+        <div className="flex items-center gap-3 px-6 py-3 paper-glass rounded-xl">
+          <div className="relative">
+            {/* 纸张光泽背景 */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/30 to-accent-500/30 rounded-full blur-sm" />
+            <Loader2 
+              className={`${sizeClasses[size]} animate-spin text-primary-600 relative z-10`}
+              aria-hidden="true"
+            />
+          </div>
+          <span className="text-foreground/70 font-medium">{message}</span>
         </div>
       </div>
     );

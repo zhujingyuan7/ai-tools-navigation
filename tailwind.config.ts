@@ -9,7 +9,7 @@ const config: Config = {
   darkMode: 'class',
   theme: {
     extend: {
-      /* Modern Color palette system (oklch-based for perceptual uniformity) */
+      /* Morandi Color palette system (oklch-based for paper texture) */
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
@@ -186,7 +186,7 @@ const config: Config = {
         'full': 'var(--radius-full)',
       },
 
-      /* Enhanced Shadows with oklch colors */
+      /* Enhanced Shadows with oklch colors - Paper texture style */
       boxShadow: {
         'xs': 'var(--shadow-xs)',
         'sm': 'var(--shadow-sm)',
@@ -311,7 +311,7 @@ const config: Config = {
         },
         glowPulse: {
           '0%, 100%': { boxShadow: 'var(--shadow-glow-sm)' },
-          '50%': { boxShadow: 'var(--shadow-glow-lg)' },
+          '50%': { boxShadow: 'var(--shadow-glow-md)' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
@@ -338,7 +338,7 @@ const config: Config = {
         },
       },
 
-      /* Enhanced Typography system with oklch-based fonts */
+      /* Enhanced Typography system */
       fontFamily: {
         sans: ['var(--font-sans)'],
         mono: ['var(--font-mono)'],

@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -43,11 +43,11 @@ export default async function LocaleLayout({
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale} className="dark">
-      <body className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <html lang={locale} suppressHydrationWarning>
+      <body className="min-h-screen" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <Navigation />
-          <div className="fixed top-4 right-4 z-50 flex items-center gap-4">
+          <div className="fixed top-4 right-4 z-50 flex items-center gap-3">
             <ThemeSwitcher />
             <LanguageSwitcher />
           </div>

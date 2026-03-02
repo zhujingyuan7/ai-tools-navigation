@@ -8,12 +8,19 @@ export default function ThemeSwitcher() {
   return (
     <button
       onClick={toggleTheme}
-      className="flex items-center gap-2 px-4 py-2 bg-slate-800/50 rounded-lg hover:bg-slate-700/50 transition-all"
-      title={isDark ? '切换到浅色主题' : '切换到深色主题'}
+      className={`tag flex items-center gap-2.5 px-4 py-2.5 rounded-xl transition-all duration-300 hover:scale-105 active:scale-95
+                 ${isDark 
+                   ? 'bg-primary-500/20 text-primary-700 border-primary-500/30 hover:bg-primary-500/30' 
+                   : 'bg-accent-500/20 text-accent-700 border-accent-500/30 hover:bg-accent-500/30'
+                 }`}
+      title={isDark ? '切换到亮色主题（微黄色）' : '切换到暗色主题（温暖棕）'}
+      aria-label={isDark ? '切换到亮色主题' : '切换到暗色主题'}
     >
-      {isDark ? '🌙' : '🌙️'}
-      <span className="ml-2 text-slate-300">
-        {isDark ? '深色模式' : '浅色模式'}
+      <span className="text-xl">
+        {isDark ? '🌙' : '☀️'}
+      </span>
+      <span className="font-medium">
+        {isDark ? '暗色' : '亮色'}
       </span>
     </button>
   );

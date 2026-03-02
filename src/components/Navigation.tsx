@@ -1,8 +1,8 @@
-﻿'use client';
+'use client';
 
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { Home, Sparkles, Clock, Search as SearchIcon, Menu, X } from 'lucide-react';
+import { Home, Sparkles, Clock, Search as SearchIcon, Menu, X, BookOpen } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { Link } from '@/i18n/routing';
@@ -21,26 +21,32 @@ export default function Navigation() {
 
   const isActive = (href: string) => {
     if (href === '/') {
-      // 匹配根路径或语言前缀路径
       return pathname === '/' || pathname?.match(/^\/[a-z]{2}-[A-Z]{2}$/);
     }
     return pathname?.includes(href);
   };
 
   return (
-    <nav className="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+    <nav className="sticky top-0 z-40 paper-glass border-b border-border-subtle shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl text-gray-900 dark:text-white hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold">AI</span>
+          {/* Logo - 纸张质感 */}
+          <Link 
+            href="/" 
+            className="flex items-center gap-2.5 font-bold text-xl text-foreground hover:text-primary-700 transition-colors group"
+          >
+            <div className="relative w-9 h-9 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <BookOpen className="w-5 h-5 text-white relative z-10" />
             </div>
-            <span>导航站</span>
+            <div className="flex flex-col">
+              <span className="text-lg leading-tight">Waffle Brain</span>
+              <span className="text-xs text-foreground/50 font-normal tracking-wide">AI 工具导航</span>
+            </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Desktop Navigation - 纸张质感 */}
+          <div className="hidden md:flex items-center gap-2">
             {navItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.href);
@@ -48,33 +54,37 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${
-                    active
-                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium'
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'
-                  }`}
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all duration-300 font-medium relative overflow-hidden group
+                             ${active
+                               ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-md'
+                               : 'text-foreground/70 hover:bg-secondary-500/30 hover:text-foreground'
+                             }`}
                 >
                   <Icon className="w-4 h-4" />
-                  <span>{item.label}</span>
+                  <span className="relative z-10">{item.label}</span>
+                  {active && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  )}
                 </Link>
               );
             })}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - 纸张质感 */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="md:hidden p-2.5 rounded-xl hover:bg-secondary-500/20 transition-all duration-200 active:scale-95"
+            aria-label={isMobileMenuOpen ? '关闭菜单' : '打开菜单'}
           >
             {isMobileMenuOpen ? (
-              <X className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+              <X className="w-6 h-6 text-foreground/70" />
             ) : (
-              <Menu className="w-6 h-6 text-gray-600 dark:text-gray-400" />
+              <Menu className="w-6 h-6 text-foreground/70" />
             )}
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - 纸张质感 */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
@@ -82,9 +92,9 @@ export default function Navigation() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden py-4 border-t border-gray-200 dark:border-gray-800"
+              className="md:hidden py-4 border-t border-border-subtle"
             >
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-2">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const active = isActive(item.href);
@@ -93,14 +103,17 @@ export default function Navigation() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
-                        active
-                          ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium'
-                          : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'
-                      }`}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 font-medium relative overflow-hidden group
+                                 ${active
+                                   ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-md'
+                                   : 'text-foreground/70 hover:bg-secondary-500/30 hover:text-foreground'
+                                 }`}
                     >
                       <Icon className="w-5 h-5" />
-                      <span>{item.label}</span>
+                      <span className="relative z-10">{item.label}</span>
+                      {active && (
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                      )}
                     </Link>
                   );
                 })}

@@ -1,5 +1,4 @@
-﻿import { Metadata } from 'next';
-import { useTranslations } from 'next-intl';
+import { Metadata } from 'next';
 import RecommendationsLibrary from '@/components/recommendations/RecommendationsLibrary';
 
 export const metadata: Metadata = {
@@ -9,10 +8,10 @@ export const metadata: Metadata = {
 
 export default function RecommendationsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <main className="min-h-screen paper-texture">
       <div className="container mx-auto px-4 py-12">
         <RecommendationsLibrary />
       </div>
-    </div>
+    </main>
   );
 }

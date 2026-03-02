@@ -24,6 +24,7 @@ export default function ToolCard({ tool }: ToolCardProps) {
   const { toggleFavorite, isFavorite } = useFavorites();
   const { trackToolCardClick, trackToolWebsiteClick } = useAnalytics();
   const [isHovered, setIsHovered] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
 
   const handleFavoriteClick = () => {
     toggleFavorite(tool.id);
@@ -31,77 +32,88 @@ export default function ToolCard({ tool }: ToolCardProps) {
   };
 
   const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setIsPressed(false);
+  };
+
+  const handleMouseDown = () => setIsPressed(true);
+  const handleMouseUp = () => setIsPressed(false);
 
   return (
     <div
-      className={`relative glass rounded-2xl p-6 overflow-hidden group
-                 hover:translate-y-[-8px] hover:rotate-x-[2deg] 
-                 transition-all duration-[300ms] 
+      className={`relative paper-card overflow-hidden group animate-fade-in
                  ${isHovered ? 'scale-[1.02]' : ''}
-                 animate-fade-in`}
+                 ${isPressed ? 'scale-[0.98]' : ''}
+                 ${isFavorite(tool.id) ? 'ring-2 ring-accent-500/50 ring-offset-2' : ''}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
     >
-      {/* Light Reflection Effect */}
+      {/* 纸张光泽效果 */}
       {isHovered && (
-        <div className="light-reflection" />
+        <div className="absolute inset-0 opacity-30 bg-gradient-to-br from-white/50 via-transparent to-transparent pointer-events-none transition-opacity duration-300" />
       )}
 
       {/* Card Content */}
-      <div className="relative z-10 card-content">
+      <div className="relative z-10 p-6">
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
-          <div className="flex-1">
-            <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-[150ms]">
+          <div className="flex-1 min-w-0">
+            <h3 className="text-xl font-bold text-foreground group-hover:text-primary-700 transition-colors duration-200 truncate">
               {tool.name}
             </h3>
             {tool.featured && (
-              <div className="flex items-center gap-1.5 mt-1">
-                <Star className="w-4 h-4 text-warning fill-current" />
-                <span className="px-2 py-0.5 bg-warning/20 text-warning border border-warning/30 rounded text-xs font-semibold">
+              <div className="flex items-center gap-1.5 mt-1.5">
+                <Star className="w-3.5 h-3.5 text-accent-500 fill-current" />
+                <span className="px-2 py-0.5 bg-accent-500/20 text-accent-700 border border-accent-500/30 rounded text-xs font-semibold">
                   精选
                 </span>
               </div>
             )}
           </div>
 
+          {/* 收藏按钮 - 纸张质感 */}
           <button
             onClick={handleFavoriteClick}
-            className={`btn-ghost relative p-2 rounded-lg 
-                         group-hover:scale-105 transition-transform duration-[200ms] 
-                         ${isFavorite(tool.id) ? 'text-error' : 'text-muted-foreground'}`}
+            className={`relative p-2 rounded-lg transition-all duration-200
+                         ${isFavorite(tool.id) 
+                           ? 'bg-accent-500/20 text-accent-600 hover:bg-accent-500/30' 
+                           : 'bg-secondary-500/20 text-foreground/60 hover:bg-secondary-500/30 hover:text-foreground'
+                         }`}
             aria-label={isFavorite(tool.id) ? "从收藏中移除" : "添加到收藏"}
           >
             <Heart 
-              className={`w-5 h-5 transition-transform duration-[200ms] 
-                              ${isFavorite(tool.id) ? 'fill-current scale-90' : 'scale-100 group-hover:scale-110'}`} 
+              className={`w-5 h-5 transition-transform duration-200 
+                              ${isFavorite(tool.id) 
+                                ? 'fill-current scale-90' 
+                                : 'group-hover:scale-110'
+                              }`} 
             />
-            {isFavorite(tool.id) && (
-              <div className="absolute inset-0 bg-error/20 rounded-lg scale-90" />
-            )}
           </button>
         </div>
 
         {/* Description */}
-        <p className="text-muted-foreground text-sm mb-4 line-clamp-2 leading-relaxed min-h-[2.5em]">
+        <p className="text-foreground/70 text-sm mb-4 line-clamp-2 leading-relaxed min-h-[2.5em]">
           {tool.description}
         </p>
 
         {/* Meta info */}
         <div className="flex items-center justify-between gap-2 mb-4">
-          <div className="flex items-center gap-2">
-            <span className="tag px-2 py-1 bg-primary/20 border border-primary/30 rounded text-xs font-semibold text-primary">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="tag px-2 py-1 bg-primary-500/20 text-primary-700 border border-primary-500/30 rounded text-xs font-semibold">
               {tool.category}
             </span>
-            <span className="tag px-2 py-1 bg-secondary/20 border border-secondary/30 rounded text-xs font-semibold text-secondary-foreground">
+            <span className="tag px-2 py-1 bg-secondary-500/20 text-foreground/70 border border-secondary-500/30 rounded text-xs font-semibold">
               {tool.priceType}
             </span>
           </div>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <Users className="w-4 h-4" />
-            <TrendingUp className="w-4 h-4 text-primary" />
-            <span className="font-semibold">⭐ {tool.rating}</span>
+          <div className="flex items-center gap-2 text-sm text-foreground/60">
+            <div className="flex items-center gap-1">
+              <Star className="w-3.5 h-3.5 text-accent-500 fill-current" />
+              <span className="font-semibold text-foreground/80">{tool.rating}</span>
+            </div>
           </div>
         </div>
 
@@ -110,33 +122,36 @@ export default function ToolCard({ tool }: ToolCardProps) {
           {tool.tags.slice(0, 4).map((tag, index) => (
             <span
               key={tag}
-              className={`tag px-3 py-1.5 rounded text-xs font-medium
-                         hover:bg-primary/30 hover:text-primary
-                         transition-all duration-[200ms] animate-fade-in`}
-              style={{ animationDelay: `${index * 80}ms` }}
+              className={`tag px-3 py-1.5 rounded text-xs font-medium cursor-pointer
+                         hover:bg-primary-500/30 hover:text-primary-700
+                         transition-all duration-200 animate-fade-in`}
+              style={{ animationDelay: `${index * 50}ms` }}
               aria-label={`标签: ${tag}`}
             >
               {tag}
             </span>
           ))}
           {tool.tags.length > 4 && (
-            <span className="px-3 py-1.5 bg-surface border border-subtle rounded text-xs text-muted-foreground">
+            <span className="px-3 py-1.5 bg-secondary-500/20 text-foreground/50 border border-secondary-500/30 rounded text-xs font-medium">
               +{tool.tags.length - 4}
             </span>
           )}
         </div>
 
-        {/* Action button */}
+        {/* Action button - 纸张质感 */}
         <Link
           href={`/tools/${tool.id}`}
           onClick={() => trackToolWebsiteClick(tool.id, tool.name)}
-          className="btn btn-primary w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm"
+          className="btn-paper w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm"
           aria-label={`查看详情: ${tool.name}`}
         >
-          查看详情
-          <ExternalLink className="w-4 h-4 ml-1 transition-transform duration-[200ms] group-hover:translate-x-1" />
+          <span className="btn-content">查看详情</span>
+          <ExternalLink className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
         </Link>
       </div>
+
+      {/* 纸张纹理覆盖 */}
+      <div className="absolute inset-0 opacity-5 pointer-events-none bg-gradient-to-br from-transparent via-foreground/5 to-transparent mix-blend-multiply" />
     </div>
   );
 }

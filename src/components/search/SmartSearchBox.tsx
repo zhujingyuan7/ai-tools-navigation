@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useRef, useEffect } from 'react';
 import { Search, X, Clock, TrendingUp, Flame, Zap } from 'lucide-react';
@@ -121,13 +121,13 @@ export default function SmartSearchBox({ onSearch, placeholder = '搜索 AI 工�
   const renderIcon = (iconName?: string) => {
     switch (iconName) {
       case 'Clock':
-        return <Clock className="w-4 h-4 text-blue-500" />;
+        return <Clock className="w-4 h-4 text-primary-600" />;
       case 'TrendingUp':
-        return <TrendingUp className="w-4 h-4 text-green-500" />;
+        return <TrendingUp className="w-4 h-4 text-accent-600" />;
       case 'Flame':
-        return <Flame className="w-4 h-4 text-red-500" />;
+        return <Flame className="w-4 h-4 text-error-600" />;
       case 'Zap':
-        return <Zap className="w-4 h-4 text-yellow-500" />;
+        return <Zap className="w-4 h-4 text-warning-600" />;
       default:
         return null;
     }
@@ -135,53 +135,58 @@ export default function SmartSearchBox({ onSearch, placeholder = '搜索 AI 工�
 
   return (
     <div className="search-container w-full max-w-2xl mx-auto px-4">
-      {/* 搜索框 */}
+      {/* 搜索框 - 纸张质感 */}
       <form onSubmit={handleSubmit} className="search-box relative" ref={searchRef}>
-        {/* 搜索图标 */}
-        <Search className="search-icon absolute left-4 text-gray-400" />
+        {/* 纸张光泽背景 */}
+        <div className="absolute inset-0 blur-xl opacity-30 bg-gradient-to-r from-primary-500/20 via-accent-500/20 to-primary-500/20 rounded-2xl" />
+        
+        <div className="relative">
+          {/* 搜索图标 */}
+          <Search className="search-icon absolute left-4 text-foreground/60" />
 
-        {/* 搜索输入框 */}
-        <input
-          type="text"
-          value={query}
-          onChange={handleInputChange}
-          onFocus={() => setIsOpen(query.length > 0 || history.length > 0)}
-          placeholder={placeholder}
-          className="search-input w-full pl-12 pr-12 py-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all"
-          autoComplete="off"
-        />
+          {/* 搜索输入框 - 纸张质感 */}
+          <input
+            type="text"
+            value={query}
+            onChange={handleInputChange}
+            onFocus={() => setIsOpen(query.length > 0 || history.length > 0)}
+            placeholder={placeholder}
+            className="input-paper search-input w-full pl-12 pr-12 py-4 rounded-2xl shadow-lg text-foreground placeholder-foreground/50 focus:shadow-xl transition-all"
+            autoComplete="off"
+          />
 
-        {/* 清除按钮 */}
-        {query && (
-          <button
-            type="button"
-            onClick={() => { setQuery(''); searchRef.current?.focus(); }}
-            className="absolute right-2 text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        )}
+          {/* 清除按钮 - 纸张质感 */}
+          {query && (
+            <button
+              type="button"
+              onClick={() => { setQuery(''); searchRef.current?.focus(); }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-foreground/50 hover:text-foreground hover:bg-foreground/10 transition-all"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
+        </div>
       </form>
 
-      {/* 搜索建议下拉 */}
+      {/* 搜索建议下拉 - 纸张质感 */}
       <AnimatePresence>
         {isOpen && (suggestions.length > 0 || history.length > 0) && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="search-suggestions absolute left-4 right-4 mt-2 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 max-h-96 overflow-y-auto z-50"
+            className="paper-card search-suggestions absolute left-4 right-4 mt-2 rounded-2xl shadow-2xl max-h-96 overflow-y-auto z-50 border border-border-medium"
           >
             {/* 搜索历史标签 */}
             {history.length > 0 && (
-              <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+              <div className="px-4 py-3 border-b border-border-subtle">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="text-sm text-foreground/60 font-medium">
                     搜索历史
                   </span>
                   <button
                     onClick={clearHistory}
-                    className="text-xs text-blue-500 hover:underline"
+                    className="text-xs text-primary-700 hover:text-primary-600 transition-colors font-medium"
                   >
                     清除
                   </button>
@@ -191,7 +196,7 @@ export default function SmartSearchBox({ onSearch, placeholder = '搜索 AI 工�
                     <span
                       key={h.id}
                       onClick={() => handleSuggestionClick({ type: 'history', text: h.query })}
-                      className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer transition-colors"
+                      className="tag px-3 py-1.5 bg-secondary-500/30 text-foreground/70 border border-border-subtle rounded-full text-sm cursor-pointer hover:bg-primary-500/20 hover:text-primary-700 hover:border-primary-500/30 transition-all"
                     >
                       {h.query}
                     </span>
@@ -208,15 +213,15 @@ export default function SmartSearchBox({ onSearch, placeholder = '搜索 AI 工�
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 }}
                 onClick={() => handleSuggestionClick(s)}
-                className="suggestion-item px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors flex items-center justify-between group"
+                className="suggestion-item px-4 py-3 hover:bg-primary-500/10 cursor-pointer transition-colors flex items-center justify-between group border-b border-border-subtle last:border-0"
               >
                 <div className="flex items-center gap-3">
                   {renderIcon(s.icon)}
-                  <span className="suggestion-text flex-grow text-gray-700 dark:text-gray-200">
+                  <span className="suggestion-text flex-grow text-foreground/80 group-hover:text-foreground transition-colors">
                     {s.text}
                   </span>
                 </div>
-                <div className="text-xs text-gray-400 dark:text-gray-500 group-hover:text-blue-500 transition-colors">
+                <div className="text-xs text-foreground/40 group-hover:text-primary-600 transition-colors font-medium">
                   {s.type === 'history' ? '历史' : s.type === 'trending' ? '热门' : '相关'}
                 </div>
               </motion.div>
@@ -225,11 +230,13 @@ export default function SmartSearchBox({ onSearch, placeholder = '搜索 AI 工�
         )}
       </AnimatePresence>
 
-      {/* 热门搜索词 */}
+      {/* 热门搜索词 - 纸张质感 */}
       <div className="mt-8">
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-          <TrendingUp className="w-5 h-5 mr-2 text-red-500" />
-          热门搜索
+        <h3 className="text-lg font-bold text-foreground mb-4 flex items-center">
+          <div className="inline-flex p-2 rounded-lg bg-gradient-to-br from-accent-500/20 to-primary-500/20">
+            <TrendingUp className="w-5 h-5 text-accent-600" />
+          </div>
+          <span className="ml-2">热门搜索</span>
         </h3>
         <div className="flex flex-wrap gap-3">
           {trendingSearches.map((keyword, index) => (
@@ -239,7 +246,7 @@ export default function SmartSearchBox({ onSearch, placeholder = '搜索 AI 工�
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.05 }}
               onClick={() => handleSuggestionClick({ type: 'trending', text: keyword })}
-              className="px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 hover:from-blue-200 hover:to-purple-200 dark:hover:from-blue-800 dark:hover:to-purple-800 text-gray-800 dark:text-gray-200 rounded-full text-sm cursor-pointer transition-all hover:scale-105 shadow-sm"
+              className="tag px-4 py-2 bg-gradient-to-br from-primary-500/20 to-accent-500/20 text-foreground/80 border border-primary-500/30 rounded-full text-sm font-medium cursor-pointer transition-all hover:scale-105 hover:shadow-sm hover:bg-primary-500/30 hover:text-primary-700"
             >
               {keyword}
             </motion.button>
@@ -249,5 +256,3 @@ export default function SmartSearchBox({ onSearch, placeholder = '搜索 AI 工�
     </div>
   );
 }
-
-

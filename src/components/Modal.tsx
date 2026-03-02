@@ -83,22 +83,29 @@ export default function Modal({
       aria-describedby={ariaLabel ? `${ariaLabel}-description` : undefined}
       onClick={handleOverlayClick}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" aria-hidden="true" />
+      {/* Overlay - 纸张质感 */}
+      <div 
+        className="absolute inset-0 backdrop-blur-sm bg-foreground/20" 
+        aria-hidden="true"
+        style={{
+          backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\' opacity=\'0.05\'/%3E%3C/svg%3E")',
+          backgroundBlendMode: 'multiply'
+        }}
+      />
       
-      {/* Modal content */}
+      {/* Modal content - 纸张质感 */}
       <div
         ref={modalRef}
-        className={`relative glass-elevated rounded-2xl w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden animate-fade-in`}
+        className={`relative paper-card w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden animate-fade-in shadow-2xl border-2 border-border-medium`}
       >
         {/* Header */}
-        <header className="flex items-center justify-between p-6 border-b border-border">
-          <h2 id="modal-title" className="text-xl font-semibold text-foreground">
+        <header className="flex items-center justify-between p-6 border-b border-border-subtle">
+          <h2 id="modal-title" className="text-xl font-bold text-foreground">
             {title}
           </h2>
           <button
             onClick={onClose}
-            className="btn-ghost p-2 rounded-lg text-muted-foreground hover:text-foreground"
+            className="p-2 rounded-xl text-foreground/60 hover:text-foreground hover:bg-foreground/10 transition-all active:scale-95"
             aria-label="关闭对话框"
           >
             <X className="w-5 h-5" />
@@ -106,7 +113,7 @@ export default function Modal({
         </header>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
+        <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)] custom-scrollbar">
           {children}
         </div>
       </div>

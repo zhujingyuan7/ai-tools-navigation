@@ -1,8 +1,9 @@
-﻿'use client';
+'use client';
 
 import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from 'next/navigation';
 import { routing, type Locale } from '@/i18n/routing';
+import { Globe } from 'lucide-react';
 
 export default function LanguageSwitcher() {
   const locale = useLocale() as Locale;
@@ -26,7 +27,7 @@ export default function LanguageSwitcher() {
       <select
         value={locale}
         onChange={(e) => handleChange(e.target.value as Locale)}
-        className="appearance-none bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 pr-8 text-sm text-white hover:bg-slate-700 transition-colors cursor-pointer"
+        className="input-paper appearance-none cursor-pointer pl-10 pr-10 text-sm font-medium"
       >
         {routing.locales.map((loc) => (
           <option key={loc} value={loc}>
@@ -34,8 +35,11 @@ export default function LanguageSwitcher() {
           </option>
         ))}
       </select>
-      <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-        <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+        <Globe className="w-4 h-4 text-foreground/50" />
+      </div>
+      <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+        <svg className="w-4 h-4 text-foreground/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </div>

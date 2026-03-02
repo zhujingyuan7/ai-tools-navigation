@@ -1,4 +1,4 @@
-﻿import { Metadata } from 'next';
+import { Metadata } from 'next';
 import NewToolsDiscovery from '@/components/discovery/NewToolsDiscovery';
 
 export const metadata: Metadata = {
@@ -8,10 +8,10 @@ export const metadata: Metadata = {
 
 export default function NewToolsPage() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <main className="min-h-screen paper-texture">
       <div className="container mx-auto px-4 py-8">
         <NewToolsDiscovery />
       </div>
-    </div>
+    </main>
   );
 }
