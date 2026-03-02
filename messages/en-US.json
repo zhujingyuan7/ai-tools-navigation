@@ -12,6 +12,7 @@
   },
   "categories": {
     "all": "All",
+    "title": "Categories",
     "textGeneration": "Text Generation",
     "imageProcessing": "Image Processing",
     "videoProduction": "Video Production",
@@ -26,19 +27,59 @@
   },
   "tools": {
     "allTools": "All Tools",
+    "toolsCount": "All Tools",
     "noResults": "No matching tools found",
+    "noResultsTitle": "No matching tools found",
+    "noResultsDesc": "Try adjusting your search or category",
     "tryOther": "Try other keywords or categories"
   },
   "footer": {
     "copyright": "© 2024 AI Tools Navigation. Discover the infinite possibilities of AI."
   },
+  "nav": {
+    "home": "Home",
+    "trending": "Trending",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu",
+    "backToHome": "Back to Home"
+  },
+  "toolDetail": {
+    "notFound": "Tool not found",
+    "backToHome": "Back to Home",
+    "visitWebsite": "Visit Website",
+    "favorite": "Favorite",
+    "favorited": "Favorited",
+    "share": "Share",
+    "copied": "Copied",
+    "toolData": "Tool Data",
+    "rating": "Rating",
+    "views": "Views",
+    "favorites": "Favorites",
+    "users": "Users",
+    "mainFeatures": "Main Features",
+    "tags": "Tags",
+    "toolInfo": "Tool Information",
+    "category": "Category",
+    "priceType": "Price Type",
+    "addedDate": "Added Date",
+    "officialWebsite": "Official Website",
+    "visitSite": "Visit Site",
+    "useNow": "Use Now",
+    "featured": "Featured",
+    "new": "New"
+  },
   "languageSwitcher": {
     "label": "Language",
     "zh-CN": "中文",
-    "en-US": "English",
-    "ja-JP": "日本語",
-    "ko-KR": "한국어",
-    "es-ES": "Español",
-    "fr-FR": "Français"
+    "en-US": "English"
+  },
+  "trending": {
+    "title": "Trending Tools Leaderboard",
+    "subtitle": "Curated most popular AI tools based on views and favorites"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "Sorry, there was a problem loading the page",
+    "retry": "Try again"
   }
 }

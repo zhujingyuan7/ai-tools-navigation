@@ -12,6 +12,7 @@
   },
   "categories": {
     "all": "全部",
+    "title": "分类",
     "textGeneration": "文本生成",
     "imageProcessing": "图像处理",
     "videoProduction": "视频制作",
@@ -26,20 +27,51 @@
   },
   "tools": {
     "allTools": "全部工具",
+    "toolsCount": "所有工具",
     "noResults": "没有找到匹配的工具",
+    "noResultsTitle": "未找到匹配的工具",
+    "noResultsDesc": "尝试调整搜索词或分类",
     "tryOther": "试试其他关键词或分类"
   },
   "footer": {
     "copyright": "© 2024 AI工具导航站. 发现AI的无限可能."
   },
+  "nav": {
+    "home": "首页",
+    "trending": "热门",
+    "closeMenu": "关闭菜单",
+    "openMenu": "打开菜单",
+    "backToHome": "返回首页"
+  },
+  "toolDetail": {
+    "notFound": "工具未找到",
+    "backToHome": "返回首页",
+    "visitWebsite": "访问官网",
+    "favorite": "收藏",
+    "favorited": "已收藏",
+    "share": "分享",
+    "copied": "已复制",
+    "toolData": "工具数据",
+    "rating": "评分",
+    "views": "浏览量",
+    "favorites": "收藏数",
+    "users": "用户数",
+    "mainFeatures": "主要功能",
+    "tags": "标签",
+    "toolInfo": "工具信息",
+    "category": "分类",
+    "priceType": "价格类型",
+    "addedDate": "添加时间",
+    "officialWebsite": "官方网站",
+    "visitSite": "访问网站",
+    "useNow": "立即使用",
+    "featured": "精选",
+    "new": "新品"
+  },
   "languageSwitcher": {
     "label": "语言",
     "zh-CN": "中文",
-    "en-US": "English",
-    "ja-JP": "日本語",
-    "ko-KR": "한국어",
-    "es-ES": "Español",
-    "fr-FR": "Français"
+    "en-US": "English"
   },
   "toolDetail": {
     "back_to_home": "返回首页",
@@ -68,5 +100,14 @@
     "no_favorites": "还没有收藏任何工具",
     "no_favorites_desc": "浏览工具页面，点击心形图标将你喜欢的工具添加到收藏列表",
     "explore_tools": "浏览全部工具"
+  },
+  "trending": {
+    "title": "热门工具排行榜",
+    "subtitle": "根据访问量和收藏数，精选最受欢迎的 AI 工具"
+  },
+  "error": {
+    "title": "出错了",
+    "description": "抱歉，页面加载时出现了问题",
+    "retry": "重试"
   }
 }

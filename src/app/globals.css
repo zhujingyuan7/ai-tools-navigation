@@ -340,6 +340,27 @@ body::before {
   transition: all var(--duration-normal) var(--ease-out);
 }
 
+/* Header 专用 - 无圆角无悬浮 */
+nav.paper-glass {
+  border-radius: 0;
+}
+
+nav.paper-glass:hover {
+  transform: none;
+  box-shadow: none;
+  background: rgba(255, 252, 245, 0.7);
+  border-color: rgba(133, 107, 82, 0.15);
+}
+
+nav.paper-glass:hover::after {
+  left: -100%;
+}
+
+.dark nav.paper-glass:hover {
+  background: rgba(60, 45, 30, 0.85);
+  border-color: rgba(80, 60, 40, 0.3);
+}
+
 /* 纸张玻璃效果 - 暗色 */
 .dark .paper-glass {
   background: rgba(60, 45, 30, 0.85);
