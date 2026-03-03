@@ -7,11 +7,44 @@ import { Link } from '@/i18n/routing';
 import { routing, type Locale } from '@/i18n/routing';
 import { Sparkles, Search, BookOpen, Lightbulb, ChevronRight, Home, Menu, X, Globe, Heart, Star, Clock, TrendingUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { aiTools } from '@/data/tools';
-import { categories } from '@/data/tools';
+import { aiTools as mockTools } from '@/data/tools';
+import { categories as mockCategories } from '@/data/tools';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { ThemeSwitcher } from '@/components/UI';
+import { getPublishedTools, getToolsByCategory, isNotionConfigured } from '@/lib/notion';
+
+// ============================================
+// 数据类型
+// ============================================
+
+interface AITool {
+  id: string;
+  name: string;
+  description: string;
+  description_en?: string;
+  category: string;
+  tags: string[];
+  icon: string;
+  website: string;
+  featured: boolean;
+  rating: number;
+  priceType: 'free' | 'freemium' | 'paid';
+  price?: string;
+  status: 'draft' | 'published' | 'unpublished';
+  views: number;
+  favorites: number;
+  isNew: boolean;
+  isHot: boolean;
+  addedAt: string;
+  screenshots?: string[];
+  features?: string[];
+  pros?: string[];
+  cons?: string[];
+  seoTitle?: string;
+  seoDescription?: string;
+  seoKeywords?: string[];
+}
 
 // ============================================
 // LanguageSwitcher
@@ -122,7 +155,7 @@ function Navigation() {
 // ============================================
 // ToolCard
 // ============================================
-function ToolCard({ tool }: { tool: any }) {
+function ToolCard({ tool }: { tool: AITool }) {
   const { toggleFavorite, isFavorite } = useFavorites();
   const { trackToolCardClick } = useAnalytics();
   const [isHovered, setIsHovered] = useState(false);
@@ -315,14 +348,79 @@ export default function HomePage() {
   const t = useTranslations();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [tools, setTools] = useState<AITool[]>([]);
+  const [categories, setCategories] = useState<string[]>(mockCategories);
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataSource, setDataSource] = useState<'mock' | 'notion'>('mock');
+
+  // 从 Notion 加载数据（如果配置了）
+  useEffect(() => {
+    const loadNotionData = async () => {
+      if (isNotionConfigured()) {
+        try {
+          const notionTools = await getPublishedTools();
+          if (notionTools.length > 0) {
+            setTools(notionTools);
+            setDataSource('notion');
+            console.log(`✓ 从 Notion 加载了 ${notionTools.length} 个工具`);
+          } else {
+            setTools(mockTools);
+            setDataSource('mock');
+            console.log('⚠ Notion 数据为空，使用 Mock 数据');
+          }
+        } catch (error) {
+          console.error('❌ 从 Notion 加载数据失败:', error);
+          setTools(mockTools);
+          setDataSource('mock');
+        }
+      } else {
+        setTools(mockTools);
+        setDataSource('mock');
+        console.log('ℹ Notion 未配置，使用 Mock 数据');
+      }
+      setIsLoading(false);
+    };
+
+    loadNotionData();
+  }, []);
+
+  // 根据选择的分类更新工具列表
+  useEffect(() => {
+    const loadToolsByCategory = async () => {
+      if (dataSource === 'notion' && isNotionConfigured()) {
+        try {
+          const categoryTools = await getToolsByCategory(selectedCategory);
+          setTools(categoryTools);
+        } catch (error) {
+          console.error('❌ 从 Notion 加载分类数据失败:', error);
+        }
+      }
+    };
+
+    if (selectedCategory !== 'all') {
+      loadToolsByCategory();
+    } else if (dataSource === 'notion' && isNotionConfigured()) {
+      getPublishedTools().then(setTools);
+    }
+  }, [selectedCategory, dataSource]);
 
   const filteredTools = useMemo(() => {
-    return aiTools.filter((tool) => {
+    // 如果使用 Notion 数据，已经按分类过滤，只需要搜索
+    if (dataSource === 'notion') {
+      return tools.filter((tool) => {
+        return tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+               tool.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+               tool.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+      });
+    }
+
+    // Mock 数据需要同时过滤搜索和分类
+    return mockTools.filter((tool) => {
       const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) || tool.description.toLowerCase().includes(searchQuery.toLowerCase()) || tool.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
       const matchesCategory = selectedCategory === 'all' || tool.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, tools, dataSource]);
 
   return (
     <>
@@ -374,38 +472,49 @@ export default function HomePage() {
               </motion.aside>
 
               <div className="flex-grow min-w-0">
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="mb-8 max-w-2xl mx-auto mt-8">
-                  <div className="relative">
-                    <div className="absolute inset-0 blur-xl opacity-40 bg-gradient-to-r from-primary-500/20 to-accent-500/20 rounded-2xl" />
-                    <SmartSearchBox onSearch={setSearchQuery} placeholder={t('search.placeholder')} />
+                {isLoading ? (
+                  <div className="flex items-center justify-center min-h-[400px]">
+                    <div className="text-center">
+                      <div className="inline-block w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mb-4" />
+                      <p className="text-foreground/60">加载中...</p>
+                    </div>
                   </div>
-                </motion.div>
+                ) : (
+                  <>
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="mb-8 max-w-2xl mx-auto mt-8">
+                      <div className="relative">
+                        <div className="absolute inset-0 blur-xl opacity-40 bg-gradient-to-r from-primary-500/20 to-accent-500/20 rounded-2xl" />
+                        <SmartSearchBox onSearch={setSearchQuery} placeholder={t('search.placeholder')} />
+                      </div>
+                    </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }}>
-                  <h2 className="text-2xl font-semibold text-foreground mb-6 flex items-center gap-2">
-                    <div className="inline-flex p-2 rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-500/20">
-                      <Lightbulb className="w-5 h-5 text-primary-600" />
-                    </div>
-                    {selectedCategory === 'all' ? t('tools.toolsCount') : selectedCategory}
-                    <span className="text-foreground/50 text-lg font-normal ml-2">({filteredTools.length})</span>
-                  </h2>
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }}>
+                      <h2 className="text-2xl font-semibold text-foreground mb-6 flex items-center gap-2">
+                        <div className="inline-flex p-2 rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-500/20">
+                          <Lightbulb className="w-5 h-5 text-primary-600" />
+                        </div>
+                        {selectedCategory === 'all' ? t('tools.toolsCount') : selectedCategory}
+                        <span className="text-foreground/50 text-lg font-normal ml-2">({filteredTools.length})</span>
+                      </h2>
 
-                  {filteredTools.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {filteredTools.map((tool, index) => (
-                        <motion.div key={tool.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.8 + index * 0.05 }}>
-                          <ToolCard tool={tool} />
-                        </motion.div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="paper-card rounded-2xl p-12 text-center max-w-2xl mx-auto">
-                      <div className="text-6xl mb-4">🔍</div>
-                      <h2 className="text-2xl font-semibold text-foreground mb-4">{t('tools.noResultsTitle')}</h2>
-                      <p className="text-foreground/60">{t('tools.noResultsDesc')}</p>
-                    </div>
-                  )}
-                </motion.div>
+                      {filteredTools.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                          {filteredTools.map((tool, index) => (
+                            <motion.div key={tool.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.8 + index * 0.05 }}>
+                              <ToolCard tool={tool} />
+                            </motion.div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="paper-card rounded-2xl p-12 text-center max-w-2xl mx-auto">
+                          <div className="text-6xl mb-4">🔍</div>
+                          <h2 className="text-2xl font-semibold text-foreground mb-4">{t('tools.noResultsTitle')}</h2>
+                          <p className="text-foreground/60">{t('tools.noResultsDesc')}</p>
+                        </div>
+                      )}
+                    </motion.div>
+                  </>
+                )}
               </div>
             </div>
           </div>

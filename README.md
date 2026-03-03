@@ -15,6 +15,7 @@
 - 🎯 **每列3个** - 响应式网格，移动1列，平板2列，桌面3列
 - ⚡ **流畅交互** - 纸张质感的悬停、点击效果
 - 🌍 **多语言支持** - 中文、英文、西班牙文、法文
+- 🗄️ **Notion CMS** - 支持 Notion 数据库作为内容管理系统
 
 ---
 
@@ -27,6 +28,12 @@
 - 🌟 **精选推荐** - 高度推荐的优质工具
 - 📖 **工具详情** - 完整的工具信息、官网链接
 - ⭐ **收藏功能** - 本地存储、个性化收藏列表
+
+### 🗄️ Notion CMS 集成
+- 📊 **Notion 数据库** - 使用 Notion 作为内容管理系统
+- 🔌 **灵活配置** - 支持 Mock 数据和 Notion 数据双模式
+- 🔄 **自动同步** - 配置后自动从 Notion 加载数据
+- 🛡️ **安全可靠** - 使用 Notion 官方 API，数据安全
 
 ### 🎨 设计系统
 - 🪟 **纸张质感** - 微黄色（亮色）/ 暗棕色（暗色）纸张纹理
@@ -50,6 +57,9 @@
 - **[React 18](https://react.dev)** - UI 库
 - **[TypeScript](https://www.typescriptlang.org/)** - 类型安全
 - **[next-intl](https://next-intl-docs.vercel.app)** - 国际化
+
+### CMS 集成
+- **[@notionhq/client](https://github.com/makenotion/notion-sdk-js)** - Notion API 官方 SDK
 
 ### 样式和 UI
 - **[Tailwind CSS 3.4](https://tailwindcss.com)** - 原子化 CSS 框架
@@ -137,17 +147,19 @@
 ai-tools-navigation/
 ├── src/
 │   ├── [locale]/              # 多语言路由（zh-CN, en-US, es-ES, fr-FR）
-│   │   ├── page.tsx          # 主页（极简布局 + 侧边栏）
+│   │   ├── page.tsx          # 主页（支持 Notion 数据 + Mock 数据）
 │   │   ├── tools/[id]/      # 工具详情页
 │   │   └── layout.tsx       # 布局（主题切换器）
 │   ├── components/         # React 组件
 │   │   ├── ToolCard.tsx        # 工具卡片（纸张质感）
 │   │   └── ...更多组件
 │   ├── hooks/             # 自定义 Hooks
-│   ├── data/              # 数据文件
-│   │   ├── tools.ts           # 工具数据
-│   │   └── categories.ts      # 分类数据
 │   ├── lib/               # 工具库
+│   │   └── notion.ts         # Notion API 客户端配置
+│   ├── data/              # 数据文件
+│   │   ├── tools.ts           # Mock 工具数据
+│   │   └── categories.ts      # Mock 分类数据
+│   ├── types/             # TypeScript 类型定义
 │   ├── app/               # Next.js App Router
 │   ├── globals.css       # 全局样式（莫兰迪色系）
 │   └── layout.tsx       # 根布局
@@ -155,6 +167,8 @@ ai-tools-navigation/
 │   ├── logos/          # Logo 文件（SVG）
 │   └── ...其他资源
 ├── messages/          # 国际化消息文件
+├── .env.example       # 环境变量示例（包含 Notion 配置）
+├── .env.local         # 实际环境变量（不提交到 Git）
 ├── tailwind.config.ts  # Tailwind 配置（oklch 色彩空间）
 ├── tsconfig.json       # TypeScript 配置
 ├── package.json        # 项目配置
@@ -178,7 +192,25 @@ cd ai-tools-navigation
 npm install
 ```
 
-### 3. 运行开发服务器
+### 3. 配置环境变量（可选，如需使用 Notion）
+
+创建 `.env.local` 文件：
+
+```bash
+# 复制示例文件
+cp .env.example .env.local
+```
+
+编辑 `.env.local` 并填写你的 Notion 配置：
+
+```env
+NOTION_API_KEY=secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NOTION_DATABASE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+**详细配置说明请查看 [Notion 集成文档](#notion-cms-集成)**
+
+### 4. 运行开发服务器
 
 ```bash
 npm run dev
@@ -186,12 +218,205 @@ npm run dev
 
 然后访问：**http://localhost:3000**
 
-### 4. 构建生产版本
+### 5. 构建生产版本
 
 ```bash
 npm run build
 npm start
 ```
+
+---
+
+## 🗄️ Notion CMS 集成
+
+### 📖 概述
+
+Waffle Brain 支持使用 Notion 作为内容管理系统（CMS），你可以：
+- ✅ 在 Notion 数据库中管理 AI 工具数据
+- ✅ 自动同步到网站，无需修改代码
+- ✅ 保留 Mock 数据作为 fallback，确保数据安全
+
+### 🔧 配置步骤
+
+#### 1. 创建 Notion Integration
+
+1. 访问 [Notion Integrations](https://www.notion.so/my-integrations)
+2. 点击 **"+ New integration"** 或 **"+ New"**
+3. 填写信息：
+   - **Name**: AI Tools Navigation（或其他名称）
+   - **Associated workspace**: 选择你的工作空间
+   - **Type**: Internal
+4. 点击 **"Submit"**
+5. 复制生成的 **"Internal Integration Token"**（以 `secret_` 开头）
+
+#### 2. 创建 Notion 数据库
+
+1. 在 Notion 中创建新的数据库
+2. 按照下方的表结构设置字段
+3. 复制数据库 ID：
+   - 打开数据库页面
+   - 从 URL 中提取数据库 ID（32 位字符，不包含连字符）
+   - URL 格式: `https://www.notion.so/your-workspace/[DATABASE_ID]?v=...`
+
+#### 3. 连接 Integration 到数据库
+
+1. 打开你的 Notion 数据库页面
+2. 点击右上角 **"..."** 菜单
+3. 选择 **"Add connections"**
+4. 搜索并选择你创建的 Integration
+5. 点击 **"Confirm"**
+
+#### 4. 配置环境变量
+
+1. 创建 `.env.local` 文件（如果不存在）
+2. 添加以下配置：
+
+```env
+# Notion API Key（从步骤 1 复制）
+NOTION_API_KEY=secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Notion Database ID（从步骤 2 复制）
+NOTION_DATABASE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+3. 重启开发服务器：
+
+```bash
+npm run dev
+```
+
+#### 5. 验证配置
+
+启动项目后，打开浏览器控制台（F12），查看日志输出：
+
+- ✓ 成功加载 Notion 数据：`✓ 从 Notion 加载了 X 个工具`
+- ℹ Notion 未配置：`ℹ Notion 未配置，使用 Mock 数据`
+- ⚠ Notion 数据为空：`⚠ Notion 数据为空，使用 Mock 数据`
+
+### 📊 Notion 数据库表结构
+
+#### 必需字段
+
+| 字段名 | 类型 | 说明 | 示例 |
+|--------|------|------|------|
+| **Name** | Title | 工具名称（自动创建） | ChatGPT |
+| **description** | Text | 工具描述 | AI 对话助手，能够理解和生成自然语言 |
+| **category** | Select | 分类 | chatbots, image-tools, coding-assistants, writing-tools, productivity, research |
+| **tags** | Multi-select | 标签 | AI, Chat, Free |
+| **website** | URL | 官网链接 | https://chatgpt.com |
+| **featured** | Checkbox | 是否精选 | 勾选表示精选工具 |
+| **rating** | Number | 评分（0-5） | 4.8 |
+| **priceType** | Select | 价格类型 | free, freemium, paid |
+| **status** | Select | 状态 | draft, published, unpublished |
+| **views** | Number | 访问量 | 15420 |
+| **favorites** | Number | 收藏数 | 3420 |
+| **isNew** | Checkbox | 是否新工具 | 勾选表示新工具 |
+| **isHot** | Checkbox | 是否热门 | 勾选表示热门 |
+| **addedAt** | Date | 添加日期 | 2024-01-01 |
+
+#### 可选字段
+
+| 字段名 | 类型 | 说明 | 示例 |
+|--------|------|------|------|
+| **description_en** | Text | 英文描述 | AI chat assistant for natural language |
+| **price** | Text | 价格详情 | $20/month |
+| **screenshots** | Multi-select | 截图 URL（数组） | https://example.com/screenshot1.png |
+| **features** | Multi-select | 功能特点（数组） | 实时对话, 多语言支持, 上下文记忆 |
+| **pros** | Multi-select | 优点（数组） | 响应快, 准确率高, 易用 |
+| **cons** | Multi-select | 缺点（数组） | 限制次数, 需要网络 |
+| **seoTitle** | Text | SEO 标题 | ChatGPT - AI 对话助手 |
+| **seoDescription** | Text | SEO 描述 | ChatGPT 是最先进的 AI 对话助手，帮助你完成各种任务 |
+| **seoKeywords** | Multi-select | SEO 关键词（数组） | AI, 对话助手, ChatGPT |
+
+#### Select 选项推荐
+
+**category** 选项：
+- `chatbots` - 聊天机器人
+- `image-tools` - 图像工具
+- `coding-assistants` - 编程助手
+- `writing-tools` - 写作工具
+- `productivity` - 生产力工具
+- `research` - 研究工具
+
+**priceType** 选项：
+- `free` - 免费
+- `freemium` - 免费增值
+- `paid` - 付费
+
+**status** 选项：
+- `draft` - 草稿
+- `published` - 已发布
+- `unpublished` - 未发布
+
+### 🎨 图标和封面设置
+
+#### 工具图标
+
+为每个工具设置图标，推荐使用 emoji：
+
+1. 在 Notion 页面标题左侧，点击添加图标
+2. 选择 **"Emoji"** 标签
+3. 搜索并选择合适的 emoji
+4. 常用图标示例：
+   - 🤖 - 聊天机器人
+   - 🎨 - 图像工具
+   - 💻 - 编程工具
+   - ✍️ - 写作工具
+   - ⚡ - 生产力工具
+   - 🔬 - 研究工具
+
+#### 封面图片（可选）
+
+为工具添加封面图片：
+
+1. 在 Notion 页面顶部，点击 **"Add cover"**
+2. 上传图片或输入图片 URL
+3. 支持的格式：JPG, PNG, GIF, WebP
+
+### 🔄 数据同步
+
+- **自动加载**：启动时自动从 Notion 加载数据
+- **实时更新**：修改 Notion 数据后，刷新页面即可看到最新数据
+- **分类筛选**：点击分类时，从 Notion 加载对应分类的工具
+- **搜索功能**：使用本地搜索，支持名称、描述、标签
+
+### ⚠️ 注意事项
+
+1. **NOTION_API_KEY** 必须以 `secret_` 开头
+2. **NOTION_DATABASE_ID** 是 32 位字符，不包含连字符
+3. 确保 Integration 已连接到数据库（"Add connections"）
+4. 工具状态必须为 `published` 才会显示在前端
+5. 如果 Notion 数据为空或加载失败，会自动使用 Mock 数据
+6. `.env.local` 文件不要提交到 Git
+
+### 🐛 故障排除
+
+#### 问题：控制台显示 "Notion API Error"
+
+**原因**：API Key 或 Database ID 错误
+
+**解决方案**：
+1. 检查 `.env.local` 中的配置是否正确
+2. 确认 Integration 已连接到数据库
+3. 检查 Notion API 配额是否超限
+
+#### 问题：显示 "Notion 数据为空，使用 Mock 数据"
+
+**原因**：数据库为空或没有 `status = published` 的数据
+
+**解决方案**：
+1. 在 Notion 数据库中添加工具数据
+2. 确保 `status` 字段设置为 `published`
+3. 检查字段名是否与表结构一致
+
+#### 问题：控制台显示 "Notion 未配置，使用 Mock 数据"
+
+**原因**：环境变量未配置
+
+**解决方案**：
+1. 创建 `.env.local` 文件
+2. 添加 `NOTION_API_KEY` 和 `NOTION_DATABASE_ID`
+3. 重启开发服务器
 
 ---
 
@@ -211,6 +436,7 @@ npm start
 - **工具总数**: 30 个精选 AI 工具
 - **分类数量**: 8 个主要分类
 - **支持语言**: 4 种语言
+- **CMS 模式**: Mock 数据 + Notion 数据双模式
 
 ---
 
@@ -227,6 +453,7 @@ Waffle Brain 的设计灵感来自：
 3. **极简布局** - 聚焦内容，去除冗余
 4. **流畅交互** - 60fps 动画，纸张质感反馈
 5. **主题切换** - 亮暗两用，适应不同场景
+6. **CMS 集成** - 灵活的内容管理
 
 ---
 
