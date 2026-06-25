@@ -82,6 +82,23 @@ export const aiTools: AITool[] = [
     isHot: false,
     addedAt: '2023-11-10',
   },
+  {
+    id: '5',
+    name: 'Remio',
+    description: '本地优先的AI记忆与个人知识库桌面应用，可解析文件、网页、录音、邮件、消息、图片和笔记，并通过本地索引与向量检索快速找到个人上下文',
+    category: 'productivity',
+    tags: ['知识库', 'AI记忆', '本地优先'],
+    icon: '🧠',
+    website: 'https://remio.ai/',
+    featured: false,
+    rating: 4.7,
+    priceType: 'freemium',
+    status: 'published',
+    views: 6400,
+    favorites: 1280,
+    isNew: true,
+    isHot: false,
+    addedAt: '2026-06-25',
+  },
 ];
-
 
